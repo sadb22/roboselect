@@ -11,11 +11,11 @@ with sync_playwright() as p:
         page.on('pageerror',lambda error:errors.append(str(error)))
         page.goto('http://127.0.0.1:8765/')
         page.get_by_role('button',name='Вход как пользователь',exact=True).click()
-        page.wait_for_url('**/user/')
+        page.wait_for_url('**/legacy/')
         assert page.get_by_role('link',name='Ассортимент',exact=True).count()==0
         assert page.request.get('http://127.0.0.1:8765/workspace/').status==403
         assert page.request.post('http://127.0.0.1:8765/workspace/parser/').status==403
-        page.get_by_role('link',name='Подобрать решение',exact=True).click()
+        page.goto('http://127.0.0.1:8765/studies/new/')
         page.wait_for_url('**/studies/new/')
         csv=page.request.get('http://127.0.0.1:8765/studies/template/').body()
         page.locator('[name=project_name]').fill('Проверка загрузки шаблона')
@@ -32,7 +32,7 @@ with sync_playwright() as p:
         assert page.get_by_role('link',name='Ассортимент',exact=True).count()==1
         page.goto('http://127.0.0.1:8765/')
         page.get_by_role('button',name='Вход как пользователь',exact=True).click()
-        page.wait_for_url('**/user/')
+        page.wait_for_url('**/legacy/')
         assert page.request.get('http://127.0.0.1:8765/workspace/robots/').status==403
         assert not errors,errors
         print(f'{width}x{height}: role switching, access denial and CSV preview OK')

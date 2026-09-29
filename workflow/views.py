@@ -55,7 +55,7 @@ def enter_role(request,role):
         return redirect('/account/?role='+('admin' if role=='admin' else 'client'))
     request.session['demo_role']=role
     request.session.cycle_key()
-    return redirect('review_catalog' if role=='admin' else 'user_home')
+    return redirect('review_catalog' if role=='admin' else '/legacy/')
 
 def user_home(request):
     rows=[]

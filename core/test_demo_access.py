@@ -60,7 +60,7 @@ class PasswordlessDemoTests(TestCase):
         self.assertEqual(client.post('/workspace/sources/', {'url':'https://example.org'}).status_code, 403)
 
     def test_catalogue_requires_selected_admin_role(self):
-        self.client.post('/enter/user/')
+        self.assertRedirects(self.client.post('/enter/user/'), '/legacy/')
         urls = ['/workspace/', '/workspace/robots/', '/workspace/sources/', '/workspace/template/',
                 '/equipment/new/', '/equipment/123/edit/', '/equipment/123/', '/batches/123/']
         for url in urls:
@@ -73,7 +73,7 @@ class PasswordlessDemoTests(TestCase):
         self.assertRedirects(self.client.post('/enter/admin/'), '/workspace/robots/')
         for url in ['/workspace/', '/workspace/robots/', '/workspace/sources/', '/equipment/new/']:
             self.assertEqual(self.client.get(url).status_code, 200)
-        self.client.post('/enter/user/')
+        self.assertRedirects(self.client.post('/enter/user/'), '/legacy/')
         self.assertEqual(self.client.get('/workspace/robots/').status_code, 403)
         visitor=get_user_model().objects.get(pk=self.client.session['demo_visitor_id'])
         self.assertFalse(visitor.is_staff)
