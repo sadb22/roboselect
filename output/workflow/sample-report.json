@@ -1,0 +1,4682 @@
+{
+  "model": "workflow-2.1",
+  "requirements": {
+    "area": 20000,
+    "active_area": 10000,
+    "aisle_m": 3.5,
+    "payload_kg": 800,
+    "temperature": 18,
+    "peak_hour": 60,
+    "daily_moves": 400,
+    "clearance_m": 0.2,
+    "allow_human": false,
+    "routes": [
+      {
+        "id": "main",
+        "name": "Основной проезд",
+        "width_m": 3.5,
+        "x1": 10,
+        "y1": 50,
+        "x2": 90,
+        "y2": 50
+      }
+    ],
+    "operations": [
+      {
+        "id": "retrieve",
+        "name": "Снять паллету со стеллажа",
+        "code": "warehouse_rack_stacking",
+        "predecessors": [],
+        "distance_m": 0,
+        "lift_m": 4,
+        "route": "",
+        "buffer": 4,
+        "stations": 3
+      },
+      {
+        "id": "move",
+        "name": "Перевезти в зону выдачи",
+        "code": "warehouse_pallet_transport",
+        "predecessors": [
+          "retrieve"
+        ],
+        "distance_m": 60,
+        "lift_m": 0,
+        "route": "main",
+        "buffer": 4,
+        "stations": 3
+      },
+      {
+        "id": "load",
+        "name": "Погрузить в автомобиль",
+        "code": "truck_loading",
+        "predecessors": [
+          "move"
+        ],
+        "distance_m": 0,
+        "lift_m": 1.2,
+        "route": "",
+        "buffer": 2,
+        "stations": 2
+      }
+    ]
+  },
+  "finance": {
+    "horizon": 5,
+    "price_factor": 1,
+    "utilization": 0.8,
+    "hours_day": 8,
+    "days_year": 247,
+    "staff": 30,
+    "payroll_month": 3000000,
+    "other_month": 400000,
+    "operators": 8,
+    "remaining_other_year": 0,
+    "electricity": 9,
+    "charger_price": 400000,
+    "robots_per_charger": 4,
+    "infrastructure": 3000000,
+    "software": 2000000,
+    "integration": 4000000,
+    "training": 600000,
+    "contingency": 10,
+    "maintenance": 5,
+    "licenses": 1500000,
+    "rental_setup": 1500000,
+    "discount": 15.28,
+    "budget": null
+  },
+  "assignments": [
+    {
+      "operation": "retrieve",
+      "group": "3",
+      "revision": 3,
+      "kind": "robot",
+      "count": 2
+    },
+    {
+      "operation": "move",
+      "group": "2",
+      "revision": 2,
+      "kind": "robot",
+      "count": 3
+    },
+    {
+      "operation": "load",
+      "group": "3",
+      "revision": 3,
+      "kind": "robot",
+      "count": 2
+    }
+  ],
+  "catalog": {
+    "3": {
+      "data": {
+        "manufacturer": "Учебный набор Робоскоп",
+        "configuration": "Демонстрационная комплектация",
+        "source": "Синтетический набор для проверки прототипа; не предложение производителя",
+        "payload_kg": 1500.0,
+        "width_m": 1.0,
+        "length_m": 1.6,
+        "min_aisle_m": 2.6,
+        "speed_m_s": 1.2,
+        "runtime_h": 6.0,
+        "charge_h": 0.3,
+        "power_kw": 0.4,
+        "lift_m": 6.0,
+        "temp_min": 0.0,
+        "temp_max": 40.0,
+        "purchase": 3500000.0,
+        "rental_month": 110000.0,
+        "rental_scope": "robots_chargers_software_service",
+        "model": "Демо: стеллажный погрузчик",
+        "operations": [
+          "warehouse_rack_stacking",
+          "truck_loading"
+        ],
+        "rates": {
+          "warehouse_rack_stacking": 95.0,
+          "truck_loading": 95.0
+        },
+        "sku": "",
+        "estimated_fields": [],
+        "estimate_basis": ""
+      },
+      "supplier": 1,
+      "supplier_name": "Демо-поставщик А",
+      "equipment": "77f7f034-1276-423b-b866-2ec990d263d0",
+      "revision": 3,
+      "demo": true
+    },
+    "2": {
+      "data": {
+        "manufacturer": "Учебный набор Робоскоп",
+        "configuration": "Демонстрационная комплектация",
+        "source": "Синтетический набор для проверки прототипа; не предложение производителя",
+        "payload_kg": 1500.0,
+        "width_m": 0.85,
+        "length_m": 1.6,
+        "min_aisle_m": 1.4,
+        "speed_m_s": 1.2,
+        "runtime_h": 6.0,
+        "charge_h": 0.3,
+        "power_kw": 0.4,
+        "lift_m": 0.0,
+        "temp_min": 0.0,
+        "temp_max": 40.0,
+        "purchase": 1800000.0,
+        "rental_month": 75000.0,
+        "rental_scope": "robots_chargers_software_service",
+        "model": "Демо: транспортная платформа",
+        "operations": [
+          "warehouse_pallet_transport"
+        ],
+        "rates": {
+          "warehouse_pallet_transport": 180.0
+        },
+        "sku": "",
+        "estimated_fields": [],
+        "estimate_basis": ""
+      },
+      "supplier": 2,
+      "supplier_name": "Демо-поставщик Б",
+      "equipment": "aa0b2362-86c7-4ebc-b0b9-a77dc25accbe",
+      "revision": 2,
+      "demo": true
+    }
+  },
+  "result": {
+    "model_version": "workflow-2.1",
+    "status": "preliminary",
+    "errors": [],
+    "missing": [],
+    "preliminary": [
+      "Демонстрационные характеристики"
+    ],
+    "groups": [
+      {
+        "id": "3",
+        "kind": "robot",
+        "count": 2,
+        "total_count": 3,
+        "revision": 3,
+        "data": {
+          "manufacturer": "Учебный набор Робоскоп",
+          "configuration": "Демонстрационная комплектация",
+          "source": "Синтетический набор для проверки прототипа; не предложение производителя",
+          "payload_kg": 1500.0,
+          "width_m": 1.0,
+          "length_m": 1.6,
+          "min_aisle_m": 2.6,
+          "speed_m_s": 1.2,
+          "runtime_h": 6.0,
+          "charge_h": 0.3,
+          "power_kw": 0.4,
+          "lift_m": 6.0,
+          "temp_min": 0.0,
+          "temp_max": 40.0,
+          "purchase": 3500000.0,
+          "rental_month": 110000.0,
+          "rental_scope": "robots_chargers_software_service",
+          "model": "Демо: стеллажный погрузчик",
+          "operations": [
+            "warehouse_rack_stacking",
+            "truck_loading"
+          ],
+          "rates": {
+            "warehouse_rack_stacking": 95.0,
+            "truck_loading": 95.0
+          },
+          "sku": "",
+          "estimated_fields": [],
+          "estimate_basis": ""
+        },
+        "supplier": 1,
+        "demo": true,
+        "chargers": 1
+      },
+      {
+        "id": "2",
+        "kind": "robot",
+        "count": 3,
+        "total_count": 4,
+        "revision": 2,
+        "data": {
+          "manufacturer": "Учебный набор Робоскоп",
+          "configuration": "Демонстрационная комплектация",
+          "source": "Синтетический набор для проверки прототипа; не предложение производителя",
+          "payload_kg": 1500.0,
+          "width_m": 0.85,
+          "length_m": 1.6,
+          "min_aisle_m": 1.4,
+          "speed_m_s": 1.2,
+          "runtime_h": 6.0,
+          "charge_h": 0.3,
+          "power_kw": 0.4,
+          "lift_m": 0.0,
+          "temp_min": 0.0,
+          "temp_max": 40.0,
+          "purchase": 1800000.0,
+          "rental_month": 75000.0,
+          "rental_scope": "robots_chargers_software_service",
+          "model": "Демо: транспортная платформа",
+          "operations": [
+            "warehouse_pallet_transport"
+          ],
+          "rates": {
+            "warehouse_pallet_transport": 180.0
+          },
+          "sku": "",
+          "estimated_fields": [],
+          "estimate_basis": ""
+        },
+        "supplier": 2,
+        "demo": true,
+        "chargers": 1
+      }
+    ],
+    "scenarios": [
+      {
+        "mode": "baseline",
+        "name": "Текущий процесс",
+        "capex": "0.00",
+        "opex": "40800000.00",
+        "tco": "204000000.00",
+        "annual_effect": "0.00",
+        "npv": "0.00",
+        "payback": null,
+        "discounted_payback": null,
+        "roi": null,
+        "net_roi": null,
+        "flows": [
+          {
+            "year": 1,
+            "flow": "0.00",
+            "cumulative": "0.00",
+            "discounted": "0.00"
+          },
+          {
+            "year": 2,
+            "flow": "0.00",
+            "cumulative": "0.00",
+            "discounted": "0.00"
+          },
+          {
+            "year": 3,
+            "flow": "0.00",
+            "cumulative": "0.00",
+            "discounted": "0.00"
+          },
+          {
+            "year": 4,
+            "flow": "0.00",
+            "cumulative": "0.00",
+            "discounted": "0.00"
+          },
+          {
+            "year": 5,
+            "flow": "0.00",
+            "cumulative": "0.00",
+            "discounted": "0.00"
+          }
+        ],
+        "capex_items": {},
+        "opex_items": {
+          "ФОТ": "36000000.00",
+          "Прочие расходы": "4800000.00"
+        },
+        "cost_per_operation": "412.96",
+        "over_budget": false
+      },
+      {
+        "mode": "purchase",
+        "name": "Покупка",
+        "capex": "30910000.00",
+        "opex": "12034795.20",
+        "tco": "91083976.00",
+        "annual_effect": "28765204.80",
+        "npv": "64879617.46",
+        "payback": 1.074562139046547,
+        "discounted_payback": 1.2752370336316883,
+        "roi": 465.3058039469427,
+        "net_roi": 365.3058039469427,
+        "flows": [
+          {
+            "year": 1,
+            "flow": "28765204.80",
+            "cumulative": "-2144795.20",
+            "discounted": "-5957532.27"
+          },
+          {
+            "year": 2,
+            "flow": "28765204.80",
+            "cumulative": "26620409.60",
+            "discounted": "15687564.65"
+          },
+          {
+            "year": 3,
+            "flow": "28765204.80",
+            "cumulative": "55385614.40",
+            "discounted": "34463672.32"
+          },
+          {
+            "year": 4,
+            "flow": "28765204.80",
+            "cumulative": "84150819.20",
+            "discounted": "50751066.21"
+          },
+          {
+            "year": 5,
+            "flow": "28765204.80",
+            "cumulative": "112916024.00",
+            "discounted": "64879617.46"
+          }
+        ],
+        "capex_items": {
+          "Роботы": "17700000.00",
+          "Зарядные станции": "800000.00",
+          "Инфраструктура": "3000000.00",
+          "ПО": "2000000.00",
+          "Интеграция и ПНР": "4000000.00",
+          "Обучение": "600000.00",
+          "Резерв бюджета": "2810000.00"
+        },
+        "opex_items": {
+          "Персонал": "9600000.00",
+          "Сохраняемые прочие расходы": "0.00",
+          "Электроэнергия": "49795.20",
+          "Сервис": "885000.00",
+          "Лицензии": "1500000.00"
+        },
+        "cost_per_operation": "121.81",
+        "over_budget": false
+      },
+      {
+        "mode": "rental",
+        "name": "Аренда",
+        "capex": "1500000.00",
+        "opex": "17209795.20",
+        "tco": "87548976.00",
+        "annual_effect": "23590204.80",
+        "npv": "77056600.21",
+        "payback": 0.06358571333810549,
+        "discounted_payback": 0.073301610336168,
+        "roi": 7863.4016,
+        "net_roi": 7763.4016,
+        "flows": [
+          {
+            "year": 1,
+            "flow": "23590204.80",
+            "cumulative": "22090204.80",
+            "discounted": "18963397.64"
+          },
+          {
+            "year": 2,
+            "flow": "23590204.80",
+            "cumulative": "45680409.60",
+            "discounted": "36714436.54"
+          },
+          {
+            "year": 3,
+            "flow": "23590204.80",
+            "cumulative": "69270614.40",
+            "discounted": "52112631.28"
+          },
+          {
+            "year": 4,
+            "flow": "23590204.80",
+            "cumulative": "92860819.20",
+            "discounted": "65469843.93"
+          },
+          {
+            "year": 5,
+            "flow": "23590204.80",
+            "cumulative": "116451024.00",
+            "discounted": "77056600.21"
+          }
+        ],
+        "capex_items": {
+          "Разовый запуск": "1500000.00"
+        },
+        "opex_items": {
+          "Персонал": "9600000.00",
+          "Сохраняемые прочие расходы": "0.00",
+          "Электроэнергия": "49795.20",
+          "Аренда с зарядками, ПО и сервисом": "7560000.00"
+        },
+        "cost_per_operation": "174.19",
+        "over_budget": false
+      }
+    ],
+    "simulation": {
+      "feasible": true,
+      "completed": 120,
+      "throughput": 60.0,
+      "queue_growth_s": 0,
+      "max_latency_s": 195.79,
+      "charging_events": 0,
+      "blocked_s": 0.0,
+      "queues": [
+        {
+          "operation": "retrieve",
+          "name": "Снять паллету со стеллажа",
+          "wait_s": 0.0
+        },
+        {
+          "operation": "move",
+          "name": "Перевезти в зону выдачи",
+          "wait_s": 0.0
+        },
+        {
+          "operation": "load",
+          "name": "Погрузить в автомобиль",
+          "wait_s": 0.0
+        }
+      ],
+      "routes": [
+        {
+          "id": "main",
+          "name": "Основной проезд",
+          "width_m": 3.5,
+          "x1": 10,
+          "y1": 50,
+          "x2": 90,
+          "y2": 50,
+          "lanes": 2,
+          "warning": "Проезд допускает параллельное движение"
+        }
+      ],
+      "events": [
+        {
+          "job": 0,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 0,
+          "end": 37.89
+        },
+        {
+          "job": 1,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 60.0,
+          "end": 97.89
+        },
+        {
+          "job": 0,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 37.89,
+          "end": 157.89
+        },
+        {
+          "job": 2,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 120.0,
+          "end": 157.89
+        },
+        {
+          "job": 0,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 157.89,
+          "end": 195.79
+        },
+        {
+          "job": 1,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 97.89,
+          "end": 217.89
+        },
+        {
+          "job": 3,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 180.0,
+          "end": 217.89
+        },
+        {
+          "job": 1,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 217.89,
+          "end": 255.79
+        },
+        {
+          "job": 2,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 157.89,
+          "end": 277.89
+        },
+        {
+          "job": 4,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 240.0,
+          "end": 277.89
+        },
+        {
+          "job": 2,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 277.89,
+          "end": 315.79
+        },
+        {
+          "job": 3,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 217.89,
+          "end": 337.89
+        },
+        {
+          "job": 5,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 300.0,
+          "end": 337.89
+        },
+        {
+          "job": 3,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 337.89,
+          "end": 375.79
+        },
+        {
+          "job": 4,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 277.89,
+          "end": 397.89
+        },
+        {
+          "job": 6,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 360.0,
+          "end": 397.89
+        },
+        {
+          "job": 4,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 397.89,
+          "end": 435.79
+        },
+        {
+          "job": 5,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 337.89,
+          "end": 457.89
+        },
+        {
+          "job": 7,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 420.0,
+          "end": 457.89
+        },
+        {
+          "job": 5,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 457.89,
+          "end": 495.79
+        },
+        {
+          "job": 6,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 397.89,
+          "end": 517.89
+        },
+        {
+          "job": 8,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 480.0,
+          "end": 517.89
+        },
+        {
+          "job": 6,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 517.89,
+          "end": 555.79
+        },
+        {
+          "job": 7,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 457.89,
+          "end": 577.89
+        },
+        {
+          "job": 9,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 540.0,
+          "end": 577.89
+        },
+        {
+          "job": 7,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 577.89,
+          "end": 615.79
+        },
+        {
+          "job": 8,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 517.89,
+          "end": 637.89
+        },
+        {
+          "job": 10,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 600.0,
+          "end": 637.89
+        },
+        {
+          "job": 8,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 637.89,
+          "end": 675.79
+        },
+        {
+          "job": 9,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 577.89,
+          "end": 697.89
+        },
+        {
+          "job": 11,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 660.0,
+          "end": 697.89
+        },
+        {
+          "job": 9,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 697.89,
+          "end": 735.79
+        },
+        {
+          "job": 10,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 637.89,
+          "end": 757.89
+        },
+        {
+          "job": 12,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 720.0,
+          "end": 757.89
+        },
+        {
+          "job": 10,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 757.89,
+          "end": 795.79
+        },
+        {
+          "job": 11,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 697.89,
+          "end": 817.89
+        },
+        {
+          "job": 13,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 780.0,
+          "end": 817.89
+        },
+        {
+          "job": 11,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 817.89,
+          "end": 855.79
+        },
+        {
+          "job": 12,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 757.89,
+          "end": 877.89
+        },
+        {
+          "job": 14,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 840.0,
+          "end": 877.89
+        },
+        {
+          "job": 12,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 877.89,
+          "end": 915.79
+        },
+        {
+          "job": 13,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 817.89,
+          "end": 937.89
+        },
+        {
+          "job": 15,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 900.0,
+          "end": 937.89
+        },
+        {
+          "job": 13,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 937.89,
+          "end": 975.79
+        },
+        {
+          "job": 14,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 877.89,
+          "end": 997.89
+        },
+        {
+          "job": 16,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 960.0,
+          "end": 997.89
+        },
+        {
+          "job": 14,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 997.89,
+          "end": 1035.79
+        },
+        {
+          "job": 15,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 937.89,
+          "end": 1057.89
+        },
+        {
+          "job": 17,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1020.0,
+          "end": 1057.89
+        },
+        {
+          "job": 15,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1057.89,
+          "end": 1095.79
+        },
+        {
+          "job": 16,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 997.89,
+          "end": 1117.89
+        },
+        {
+          "job": 18,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1080.0,
+          "end": 1117.89
+        },
+        {
+          "job": 16,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1117.89,
+          "end": 1155.79
+        },
+        {
+          "job": 17,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1057.89,
+          "end": 1177.89
+        },
+        {
+          "job": 19,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1140.0,
+          "end": 1177.89
+        },
+        {
+          "job": 17,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1177.89,
+          "end": 1215.79
+        },
+        {
+          "job": 18,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 1117.89,
+          "end": 1237.89
+        },
+        {
+          "job": 20,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1200.0,
+          "end": 1237.89
+        },
+        {
+          "job": 18,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1237.89,
+          "end": 1275.79
+        },
+        {
+          "job": 19,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 1177.89,
+          "end": 1297.89
+        },
+        {
+          "job": 21,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1260.0,
+          "end": 1297.89
+        },
+        {
+          "job": 19,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1297.89,
+          "end": 1335.79
+        },
+        {
+          "job": 20,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1237.89,
+          "end": 1357.89
+        },
+        {
+          "job": 22,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1320.0,
+          "end": 1357.89
+        },
+        {
+          "job": 20,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1357.89,
+          "end": 1395.79
+        },
+        {
+          "job": 21,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 1297.89,
+          "end": 1417.89
+        },
+        {
+          "job": 23,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1380.0,
+          "end": 1417.89
+        },
+        {
+          "job": 21,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1417.89,
+          "end": 1455.79
+        },
+        {
+          "job": 22,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 1357.89,
+          "end": 1477.89
+        },
+        {
+          "job": 24,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1440.0,
+          "end": 1477.89
+        },
+        {
+          "job": 22,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1477.89,
+          "end": 1515.79
+        },
+        {
+          "job": 23,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1417.89,
+          "end": 1537.89
+        },
+        {
+          "job": 25,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1500.0,
+          "end": 1537.89
+        },
+        {
+          "job": 23,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1537.89,
+          "end": 1575.79
+        },
+        {
+          "job": 24,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 1477.89,
+          "end": 1597.89
+        },
+        {
+          "job": 26,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1560.0,
+          "end": 1597.89
+        },
+        {
+          "job": 24,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1597.89,
+          "end": 1635.79
+        },
+        {
+          "job": 25,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 1537.89,
+          "end": 1657.89
+        },
+        {
+          "job": 27,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1620.0,
+          "end": 1657.89
+        },
+        {
+          "job": 25,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1657.89,
+          "end": 1695.79
+        },
+        {
+          "job": 26,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1597.89,
+          "end": 1717.89
+        },
+        {
+          "job": 28,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1680.0,
+          "end": 1717.89
+        },
+        {
+          "job": 26,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1717.89,
+          "end": 1755.79
+        },
+        {
+          "job": 27,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 1657.89,
+          "end": 1777.89
+        },
+        {
+          "job": 29,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1740.0,
+          "end": 1777.89
+        },
+        {
+          "job": 27,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1777.89,
+          "end": 1815.79
+        },
+        {
+          "job": 28,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 1717.89,
+          "end": 1837.89
+        },
+        {
+          "job": 30,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1800.0,
+          "end": 1837.89
+        },
+        {
+          "job": 28,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1837.89,
+          "end": 1875.79
+        },
+        {
+          "job": 29,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1777.89,
+          "end": 1897.89
+        },
+        {
+          "job": 31,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1860.0,
+          "end": 1897.89
+        },
+        {
+          "job": 29,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1897.89,
+          "end": 1935.79
+        },
+        {
+          "job": 30,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 1837.89,
+          "end": 1957.89
+        },
+        {
+          "job": 32,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1920.0,
+          "end": 1957.89
+        },
+        {
+          "job": 30,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 1957.89,
+          "end": 1995.79
+        },
+        {
+          "job": 31,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 1897.89,
+          "end": 2017.89
+        },
+        {
+          "job": 33,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 1980.0,
+          "end": 2017.89
+        },
+        {
+          "job": 31,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2017.89,
+          "end": 2055.79
+        },
+        {
+          "job": 32,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 1957.89,
+          "end": 2077.89
+        },
+        {
+          "job": 34,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2040.0,
+          "end": 2077.89
+        },
+        {
+          "job": 32,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2077.89,
+          "end": 2115.79
+        },
+        {
+          "job": 33,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2017.89,
+          "end": 2137.89
+        },
+        {
+          "job": 35,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2100.0,
+          "end": 2137.89
+        },
+        {
+          "job": 33,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2137.89,
+          "end": 2175.79
+        },
+        {
+          "job": 34,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2077.89,
+          "end": 2197.89
+        },
+        {
+          "job": 36,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2160.0,
+          "end": 2197.89
+        },
+        {
+          "job": 34,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2197.89,
+          "end": 2235.79
+        },
+        {
+          "job": 35,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 2137.89,
+          "end": 2257.89
+        },
+        {
+          "job": 37,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2220.0,
+          "end": 2257.89
+        },
+        {
+          "job": 35,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2257.89,
+          "end": 2295.79
+        },
+        {
+          "job": 36,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2197.89,
+          "end": 2317.89
+        },
+        {
+          "job": 38,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2280.0,
+          "end": 2317.89
+        },
+        {
+          "job": 36,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2317.89,
+          "end": 2355.79
+        },
+        {
+          "job": 37,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2257.89,
+          "end": 2377.89
+        },
+        {
+          "job": 39,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2340.0,
+          "end": 2377.89
+        },
+        {
+          "job": 37,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2377.89,
+          "end": 2415.79
+        },
+        {
+          "job": 38,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 2317.89,
+          "end": 2437.89
+        },
+        {
+          "job": 40,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2400.0,
+          "end": 2437.89
+        },
+        {
+          "job": 38,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2437.89,
+          "end": 2475.79
+        },
+        {
+          "job": 39,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2377.89,
+          "end": 2497.89
+        },
+        {
+          "job": 41,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2460.0,
+          "end": 2497.89
+        },
+        {
+          "job": 39,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2497.89,
+          "end": 2535.79
+        },
+        {
+          "job": 40,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2437.89,
+          "end": 2557.89
+        },
+        {
+          "job": 42,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2520.0,
+          "end": 2557.89
+        },
+        {
+          "job": 40,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2557.89,
+          "end": 2595.79
+        },
+        {
+          "job": 41,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 2497.89,
+          "end": 2617.89
+        },
+        {
+          "job": 43,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2580.0,
+          "end": 2617.89
+        },
+        {
+          "job": 41,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2617.89,
+          "end": 2655.79
+        },
+        {
+          "job": 42,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2557.89,
+          "end": 2677.89
+        },
+        {
+          "job": 44,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2640.0,
+          "end": 2677.89
+        },
+        {
+          "job": 42,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2677.89,
+          "end": 2715.79
+        },
+        {
+          "job": 43,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2617.89,
+          "end": 2737.89
+        },
+        {
+          "job": 45,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2700.0,
+          "end": 2737.89
+        },
+        {
+          "job": 43,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2737.89,
+          "end": 2775.79
+        },
+        {
+          "job": 44,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 2677.89,
+          "end": 2797.89
+        },
+        {
+          "job": 46,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2760.0,
+          "end": 2797.89
+        },
+        {
+          "job": 44,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2797.89,
+          "end": 2835.79
+        },
+        {
+          "job": 45,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2737.89,
+          "end": 2857.89
+        },
+        {
+          "job": 47,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2820.0,
+          "end": 2857.89
+        },
+        {
+          "job": 45,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2857.89,
+          "end": 2895.79
+        },
+        {
+          "job": 46,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2797.89,
+          "end": 2917.89
+        },
+        {
+          "job": 48,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2880.0,
+          "end": 2917.89
+        },
+        {
+          "job": 46,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2917.89,
+          "end": 2955.79
+        },
+        {
+          "job": 47,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 2857.89,
+          "end": 2977.89
+        },
+        {
+          "job": 49,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 2940.0,
+          "end": 2977.89
+        },
+        {
+          "job": 47,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 2977.89,
+          "end": 3015.79
+        },
+        {
+          "job": 48,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 2917.89,
+          "end": 3037.89
+        },
+        {
+          "job": 50,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3000.0,
+          "end": 3037.89
+        },
+        {
+          "job": 48,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3037.89,
+          "end": 3075.79
+        },
+        {
+          "job": 49,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 2977.89,
+          "end": 3097.89
+        },
+        {
+          "job": 51,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3060.0,
+          "end": 3097.89
+        },
+        {
+          "job": 49,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3097.89,
+          "end": 3135.79
+        },
+        {
+          "job": 50,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3037.89,
+          "end": 3157.89
+        },
+        {
+          "job": 52,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3120.0,
+          "end": 3157.89
+        },
+        {
+          "job": 50,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3157.89,
+          "end": 3195.79
+        },
+        {
+          "job": 51,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3097.89,
+          "end": 3217.89
+        },
+        {
+          "job": 53,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3180.0,
+          "end": 3217.89
+        },
+        {
+          "job": 51,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3217.89,
+          "end": 3255.79
+        },
+        {
+          "job": 52,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 3157.89,
+          "end": 3277.89
+        },
+        {
+          "job": 54,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3240.0,
+          "end": 3277.89
+        },
+        {
+          "job": 52,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3277.89,
+          "end": 3315.79
+        },
+        {
+          "job": 53,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3217.89,
+          "end": 3337.89
+        },
+        {
+          "job": 55,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3300.0,
+          "end": 3337.89
+        },
+        {
+          "job": 53,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3337.89,
+          "end": 3375.79
+        },
+        {
+          "job": 54,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3277.89,
+          "end": 3397.89
+        },
+        {
+          "job": 56,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3360.0,
+          "end": 3397.89
+        },
+        {
+          "job": 54,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3397.89,
+          "end": 3435.79
+        },
+        {
+          "job": 55,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 3337.89,
+          "end": 3457.89
+        },
+        {
+          "job": 57,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3420.0,
+          "end": 3457.89
+        },
+        {
+          "job": 55,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3457.89,
+          "end": 3495.79
+        },
+        {
+          "job": 56,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3397.89,
+          "end": 3517.89
+        },
+        {
+          "job": 58,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3480.0,
+          "end": 3517.89
+        },
+        {
+          "job": 56,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3517.89,
+          "end": 3555.79
+        },
+        {
+          "job": 57,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3457.89,
+          "end": 3577.89
+        },
+        {
+          "job": 59,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3540.0,
+          "end": 3577.89
+        },
+        {
+          "job": 57,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3577.89,
+          "end": 3615.79
+        },
+        {
+          "job": 58,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 3517.89,
+          "end": 3637.89
+        },
+        {
+          "job": 60,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3600.0,
+          "end": 3637.89
+        },
+        {
+          "job": 58,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3637.89,
+          "end": 3675.79
+        },
+        {
+          "job": 59,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3577.89,
+          "end": 3697.89
+        },
+        {
+          "job": 61,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3660.0,
+          "end": 3697.89
+        },
+        {
+          "job": 59,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3697.89,
+          "end": 3735.79
+        },
+        {
+          "job": 60,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3637.89,
+          "end": 3757.89
+        },
+        {
+          "job": 62,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3720.0,
+          "end": 3757.89
+        },
+        {
+          "job": 60,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3757.89,
+          "end": 3795.79
+        },
+        {
+          "job": 61,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 3697.89,
+          "end": 3817.89
+        },
+        {
+          "job": 63,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3780.0,
+          "end": 3817.89
+        },
+        {
+          "job": 61,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3817.89,
+          "end": 3855.79
+        },
+        {
+          "job": 62,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3757.89,
+          "end": 3877.89
+        },
+        {
+          "job": 64,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3840.0,
+          "end": 3877.89
+        },
+        {
+          "job": 62,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3877.89,
+          "end": 3915.79
+        },
+        {
+          "job": 63,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3817.89,
+          "end": 3937.89
+        },
+        {
+          "job": 65,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3900.0,
+          "end": 3937.89
+        },
+        {
+          "job": 63,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3937.89,
+          "end": 3975.79
+        },
+        {
+          "job": 64,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 3877.89,
+          "end": 3997.89
+        },
+        {
+          "job": 66,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 3960.0,
+          "end": 3997.89
+        },
+        {
+          "job": 64,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 3997.89,
+          "end": 4035.79
+        },
+        {
+          "job": 65,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 3937.89,
+          "end": 4057.89
+        },
+        {
+          "job": 67,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4020.0,
+          "end": 4057.89
+        },
+        {
+          "job": 65,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4057.89,
+          "end": 4095.79
+        },
+        {
+          "job": 66,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 3997.89,
+          "end": 4117.89
+        },
+        {
+          "job": 68,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4080.0,
+          "end": 4117.89
+        },
+        {
+          "job": 66,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4117.89,
+          "end": 4155.79
+        },
+        {
+          "job": 67,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4057.89,
+          "end": 4177.89
+        },
+        {
+          "job": 69,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4140.0,
+          "end": 4177.89
+        },
+        {
+          "job": 67,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4177.89,
+          "end": 4215.79
+        },
+        {
+          "job": 68,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 4117.89,
+          "end": 4237.89
+        },
+        {
+          "job": 70,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4200.0,
+          "end": 4237.89
+        },
+        {
+          "job": 68,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4237.89,
+          "end": 4275.79
+        },
+        {
+          "job": 69,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 4177.89,
+          "end": 4297.89
+        },
+        {
+          "job": 71,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4260.0,
+          "end": 4297.89
+        },
+        {
+          "job": 69,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4297.89,
+          "end": 4335.79
+        },
+        {
+          "job": 70,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4237.89,
+          "end": 4357.89
+        },
+        {
+          "job": 72,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4320.0,
+          "end": 4357.89
+        },
+        {
+          "job": 70,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4357.89,
+          "end": 4395.79
+        },
+        {
+          "job": 71,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 4297.89,
+          "end": 4417.89
+        },
+        {
+          "job": 73,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4380.0,
+          "end": 4417.89
+        },
+        {
+          "job": 71,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4417.89,
+          "end": 4455.79
+        },
+        {
+          "job": 72,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 4357.89,
+          "end": 4477.89
+        },
+        {
+          "job": 74,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4440.0,
+          "end": 4477.89
+        },
+        {
+          "job": 72,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4477.89,
+          "end": 4515.79
+        },
+        {
+          "job": 73,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4417.89,
+          "end": 4537.89
+        },
+        {
+          "job": 75,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4500.0,
+          "end": 4537.89
+        },
+        {
+          "job": 73,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4537.89,
+          "end": 4575.79
+        },
+        {
+          "job": 74,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 4477.89,
+          "end": 4597.89
+        },
+        {
+          "job": 76,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4560.0,
+          "end": 4597.89
+        },
+        {
+          "job": 74,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4597.89,
+          "end": 4635.79
+        },
+        {
+          "job": 75,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 4537.89,
+          "end": 4657.89
+        },
+        {
+          "job": 77,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4620.0,
+          "end": 4657.89
+        },
+        {
+          "job": 75,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4657.89,
+          "end": 4695.79
+        },
+        {
+          "job": 76,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4597.89,
+          "end": 4717.89
+        },
+        {
+          "job": 78,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4680.0,
+          "end": 4717.89
+        },
+        {
+          "job": 76,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4717.89,
+          "end": 4755.79
+        },
+        {
+          "job": 77,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 4657.89,
+          "end": 4777.89
+        },
+        {
+          "job": 79,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4740.0,
+          "end": 4777.89
+        },
+        {
+          "job": 77,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4777.89,
+          "end": 4815.79
+        },
+        {
+          "job": 78,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 4717.89,
+          "end": 4837.89
+        },
+        {
+          "job": 80,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4800.0,
+          "end": 4837.89
+        },
+        {
+          "job": 78,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4837.89,
+          "end": 4875.79
+        },
+        {
+          "job": 79,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4777.89,
+          "end": 4897.89
+        },
+        {
+          "job": 81,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4860.0,
+          "end": 4897.89
+        },
+        {
+          "job": 79,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4897.89,
+          "end": 4935.79
+        },
+        {
+          "job": 80,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 4837.89,
+          "end": 4957.89
+        },
+        {
+          "job": 82,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4920.0,
+          "end": 4957.89
+        },
+        {
+          "job": 80,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 4957.89,
+          "end": 4995.79
+        },
+        {
+          "job": 81,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 4897.89,
+          "end": 5017.89
+        },
+        {
+          "job": 83,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 4980.0,
+          "end": 5017.89
+        },
+        {
+          "job": 81,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5017.89,
+          "end": 5055.79
+        },
+        {
+          "job": 82,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 4957.89,
+          "end": 5077.89
+        },
+        {
+          "job": 84,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5040.0,
+          "end": 5077.89
+        },
+        {
+          "job": 82,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5077.89,
+          "end": 5115.79
+        },
+        {
+          "job": 83,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5017.89,
+          "end": 5137.89
+        },
+        {
+          "job": 85,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5100.0,
+          "end": 5137.89
+        },
+        {
+          "job": 83,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5137.89,
+          "end": 5175.79
+        },
+        {
+          "job": 84,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5077.89,
+          "end": 5197.89
+        },
+        {
+          "job": 86,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5160.0,
+          "end": 5197.89
+        },
+        {
+          "job": 84,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5197.89,
+          "end": 5235.79
+        },
+        {
+          "job": 85,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 5137.89,
+          "end": 5257.89
+        },
+        {
+          "job": 87,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5220.0,
+          "end": 5257.89
+        },
+        {
+          "job": 85,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5257.89,
+          "end": 5295.79
+        },
+        {
+          "job": 86,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5197.89,
+          "end": 5317.89
+        },
+        {
+          "job": 88,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5280.0,
+          "end": 5317.89
+        },
+        {
+          "job": 86,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5317.89,
+          "end": 5355.79
+        },
+        {
+          "job": 87,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5257.89,
+          "end": 5377.89
+        },
+        {
+          "job": 89,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5340.0,
+          "end": 5377.89
+        },
+        {
+          "job": 87,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5377.89,
+          "end": 5415.79
+        },
+        {
+          "job": 88,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 5317.89,
+          "end": 5437.89
+        },
+        {
+          "job": 90,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5400.0,
+          "end": 5437.89
+        },
+        {
+          "job": 88,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5437.89,
+          "end": 5475.79
+        },
+        {
+          "job": 89,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5377.89,
+          "end": 5497.89
+        },
+        {
+          "job": 91,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5460.0,
+          "end": 5497.89
+        },
+        {
+          "job": 89,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5497.89,
+          "end": 5535.79
+        },
+        {
+          "job": 90,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5437.89,
+          "end": 5557.89
+        },
+        {
+          "job": 92,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5520.0,
+          "end": 5557.89
+        },
+        {
+          "job": 90,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5557.89,
+          "end": 5595.79
+        },
+        {
+          "job": 91,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 5497.89,
+          "end": 5617.89
+        },
+        {
+          "job": 93,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5580.0,
+          "end": 5617.89
+        },
+        {
+          "job": 91,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5617.89,
+          "end": 5655.79
+        },
+        {
+          "job": 92,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5557.89,
+          "end": 5677.89
+        },
+        {
+          "job": 94,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5640.0,
+          "end": 5677.89
+        },
+        {
+          "job": 92,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5677.89,
+          "end": 5715.79
+        },
+        {
+          "job": 93,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5617.89,
+          "end": 5737.89
+        },
+        {
+          "job": 95,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5700.0,
+          "end": 5737.89
+        },
+        {
+          "job": 93,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5737.89,
+          "end": 5775.79
+        },
+        {
+          "job": 94,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 5677.89,
+          "end": 5797.89
+        },
+        {
+          "job": 96,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5760.0,
+          "end": 5797.89
+        },
+        {
+          "job": 94,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5797.89,
+          "end": 5835.79
+        },
+        {
+          "job": 95,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5737.89,
+          "end": 5857.89
+        },
+        {
+          "job": 97,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5820.0,
+          "end": 5857.89
+        },
+        {
+          "job": 95,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5857.89,
+          "end": 5895.79
+        },
+        {
+          "job": 96,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5797.89,
+          "end": 5917.89
+        },
+        {
+          "job": 98,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5880.0,
+          "end": 5917.89
+        },
+        {
+          "job": 96,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5917.89,
+          "end": 5955.79
+        },
+        {
+          "job": 97,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 5857.89,
+          "end": 5977.89
+        },
+        {
+          "job": 99,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 5940.0,
+          "end": 5977.89
+        },
+        {
+          "job": 97,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 5977.89,
+          "end": 6015.79
+        },
+        {
+          "job": 98,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 5917.89,
+          "end": 6037.89
+        },
+        {
+          "job": 100,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6000.0,
+          "end": 6037.89
+        },
+        {
+          "job": 98,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6037.89,
+          "end": 6075.79
+        },
+        {
+          "job": 99,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 5977.89,
+          "end": 6097.89
+        },
+        {
+          "job": 101,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6060.0,
+          "end": 6097.89
+        },
+        {
+          "job": 99,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6097.89,
+          "end": 6135.79
+        },
+        {
+          "job": 100,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6037.89,
+          "end": 6157.89
+        },
+        {
+          "job": 102,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6120.0,
+          "end": 6157.89
+        },
+        {
+          "job": 100,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6157.89,
+          "end": 6195.79
+        },
+        {
+          "job": 101,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6097.89,
+          "end": 6217.89
+        },
+        {
+          "job": 103,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6180.0,
+          "end": 6217.89
+        },
+        {
+          "job": 101,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6217.89,
+          "end": 6255.79
+        },
+        {
+          "job": 102,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 6157.89,
+          "end": 6277.89
+        },
+        {
+          "job": 104,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6240.0,
+          "end": 6277.89
+        },
+        {
+          "job": 102,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6277.89,
+          "end": 6315.79
+        },
+        {
+          "job": 103,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6217.89,
+          "end": 6337.89
+        },
+        {
+          "job": 105,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6300.0,
+          "end": 6337.89
+        },
+        {
+          "job": 103,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6337.89,
+          "end": 6375.79
+        },
+        {
+          "job": 104,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6277.89,
+          "end": 6397.89
+        },
+        {
+          "job": 106,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6360.0,
+          "end": 6397.89
+        },
+        {
+          "job": 104,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6397.89,
+          "end": 6435.79
+        },
+        {
+          "job": 105,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 6337.89,
+          "end": 6457.89
+        },
+        {
+          "job": 107,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6420.0,
+          "end": 6457.89
+        },
+        {
+          "job": 105,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6457.89,
+          "end": 6495.79
+        },
+        {
+          "job": 106,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6397.89,
+          "end": 6517.89
+        },
+        {
+          "job": 108,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6480.0,
+          "end": 6517.89
+        },
+        {
+          "job": 106,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6517.89,
+          "end": 6555.79
+        },
+        {
+          "job": 107,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6457.89,
+          "end": 6577.89
+        },
+        {
+          "job": 109,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6540.0,
+          "end": 6577.89
+        },
+        {
+          "job": 107,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6577.89,
+          "end": 6615.79
+        },
+        {
+          "job": 108,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 6517.89,
+          "end": 6637.89
+        },
+        {
+          "job": 110,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6600.0,
+          "end": 6637.89
+        },
+        {
+          "job": 108,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6637.89,
+          "end": 6675.79
+        },
+        {
+          "job": 109,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6577.89,
+          "end": 6697.89
+        },
+        {
+          "job": 111,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6660.0,
+          "end": 6697.89
+        },
+        {
+          "job": 109,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6697.89,
+          "end": 6735.79
+        },
+        {
+          "job": 110,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6637.89,
+          "end": 6757.89
+        },
+        {
+          "job": 112,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6720.0,
+          "end": 6757.89
+        },
+        {
+          "job": 110,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6757.89,
+          "end": 6795.79
+        },
+        {
+          "job": 111,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 6697.89,
+          "end": 6817.89
+        },
+        {
+          "job": 113,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6780.0,
+          "end": 6817.89
+        },
+        {
+          "job": 111,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6817.89,
+          "end": 6855.79
+        },
+        {
+          "job": 112,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6757.89,
+          "end": 6877.89
+        },
+        {
+          "job": 114,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6840.0,
+          "end": 6877.89
+        },
+        {
+          "job": 112,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6877.89,
+          "end": 6915.79
+        },
+        {
+          "job": 113,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6817.89,
+          "end": 6937.89
+        },
+        {
+          "job": 115,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6900.0,
+          "end": 6937.89
+        },
+        {
+          "job": 113,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6937.89,
+          "end": 6975.79
+        },
+        {
+          "job": 114,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 6877.89,
+          "end": 6997.89
+        },
+        {
+          "job": 116,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 6960.0,
+          "end": 6997.89
+        },
+        {
+          "job": 114,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 6997.89,
+          "end": 7035.79
+        },
+        {
+          "job": 115,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 6937.89,
+          "end": 7057.89
+        },
+        {
+          "job": 117,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 7020.0,
+          "end": 7057.89
+        },
+        {
+          "job": 115,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 7057.89,
+          "end": 7095.79
+        },
+        {
+          "job": 116,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 6997.89,
+          "end": 7117.89
+        },
+        {
+          "job": 118,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 7080.0,
+          "end": 7117.89
+        },
+        {
+          "job": 116,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 7117.89,
+          "end": 7155.79
+        },
+        {
+          "job": 117,
+          "operation": "move",
+          "group": "2",
+          "worker": 0,
+          "phase": "work",
+          "start": 7057.89,
+          "end": 7177.89
+        },
+        {
+          "job": 119,
+          "operation": "retrieve",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 7140.0,
+          "end": 7177.89
+        },
+        {
+          "job": 117,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 7177.89,
+          "end": 7215.79
+        },
+        {
+          "job": 118,
+          "operation": "move",
+          "group": "2",
+          "worker": 1,
+          "phase": "work",
+          "start": 7117.89,
+          "end": 7237.89
+        },
+        {
+          "job": 118,
+          "operation": "load",
+          "group": "3",
+          "worker": 0,
+          "phase": "work",
+          "start": 7237.89,
+          "end": 7275.79
+        },
+        {
+          "job": 119,
+          "operation": "move",
+          "group": "2",
+          "worker": 2,
+          "phase": "work",
+          "start": 7177.89,
+          "end": 7297.89
+        },
+        {
+          "job": 119,
+          "operation": "load",
+          "group": "3",
+          "worker": 1,
+          "phase": "work",
+          "start": 7297.89,
+          "end": 7335.79
+        }
+      ],
+      "reason": "Поток устойчив в проверенном сценарии",
+      "assumptions": [
+        "Детерминированные времена операций; все ветви процесса обязательны.",
+        "Общий ресурс не получает дополнительное рабочее время при назначении на несколько операций.",
+        "Проезды моделируются ограниченной ёмкостью, точные траектории и столкновения не рассчитываются.",
+        "При передаче между операциями общего исполнителя груз ожидает в месте операции."
+      ],
+      "resource_bound": 85.71
+    },
+    "conclusion": "В этой конфигурации минимальные затраты у варианта «Аренда»: 87548976.00 руб. за 5 лет. Разница с текущим процессом: 116451024.00 руб. Модель показывает сокращение затрат. Результат требует верификации при обследовании объекта и согласования ТТХ и коммерческих условий.",
+    "load_limit": {
+      "tested_stable": 60,
+      "upper_tested": 61.88,
+      "checks": [
+        {
+          "rate": 60,
+          "feasible": true
+        },
+        {
+          "rate": 120,
+          "feasible": false
+        },
+        {
+          "rate": 90.0,
+          "feasible": false
+        },
+        {
+          "rate": 75.0,
+          "feasible": false
+        },
+        {
+          "rate": 67.5,
+          "feasible": false
+        },
+        {
+          "rate": 63.75,
+          "feasible": false
+        },
+        {
+          "rate": 61.88,
+          "feasible": false
+        }
+      ],
+      "note": "Наибольший устойчивый поток среди проверенных нагрузок; не гарантия работы реального склада."
+    },
+    "sensitivity": [
+      {
+        "parameter": "Стоимость оборудования",
+        "delta": -20,
+        "status": "preliminary",
+        "reason": "",
+        "scenarios": [
+          {
+            "mode": "baseline",
+            "name": "Текущий процесс",
+            "capex": "0.00",
+            "opex": "40800000.00",
+            "tco": "204000000.00",
+            "annual_effect": "0.00",
+            "npv": "0.00",
+            "payback": null,
+            "discounted_payback": null,
+            "roi": null,
+            "net_roi": null,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 2,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 3,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 4,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 5,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              }
+            ],
+            "capex_items": {},
+            "opex_items": {
+              "ФОТ": "36000000.00",
+              "Прочие расходы": "4800000.00"
+            },
+            "cost_per_operation": "412.96",
+            "over_budget": false
+          },
+          {
+            "mode": "purchase",
+            "name": "Покупка",
+            "capex": "27016000.00",
+            "opex": "11857795.20",
+            "tco": "86304976.00",
+            "annual_effect": "28942204.80",
+            "npv": "69363036.60",
+            "payback": 0.9334465078486349,
+            "discounted_payback": 1.0877017203609864,
+            "roi": 535.6493337281611,
+            "net_roi": 435.6493337281611,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "28942204.80",
+                "cumulative": "1926204.80",
+                "discounted": "-1909993.06"
+              },
+              {
+                "year": 2,
+                "flow": "28942204.80",
+                "cumulative": "30868409.60",
+                "discounted": "19868291.93"
+              },
+              {
+                "year": 3,
+                "flow": "28942204.80",
+                "cumulative": "59810614.40",
+                "discounted": "38759934.01"
+              },
+              {
+                "year": 4,
+                "flow": "28942204.80",
+                "cumulative": "88752819.20",
+                "discounted": "55147548.59"
+              },
+              {
+                "year": 5,
+                "flow": "28942204.80",
+                "cumulative": "117695024.00",
+                "discounted": "69363036.60"
+              }
+            ],
+            "capex_items": {
+              "Роботы": "14160000.00",
+              "Зарядные станции": "800000.00",
+              "Инфраструктура": "3000000.00",
+              "ПО": "2000000.00",
+              "Интеграция и ПНР": "4000000.00",
+              "Обучение": "600000.00",
+              "Резерв бюджета": "2456000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Сервис": "708000.00",
+              "Лицензии": "1500000.00"
+            },
+            "cost_per_operation": "120.02",
+            "over_budget": false
+          },
+          {
+            "mode": "rental",
+            "name": "Аренда",
+            "capex": "1500000.00",
+            "opex": "17209795.20",
+            "tco": "87548976.00",
+            "annual_effect": "23590204.80",
+            "npv": "77056600.21",
+            "payback": 0.06358571333810549,
+            "discounted_payback": 0.073301610336168,
+            "roi": 7863.4016,
+            "net_roi": 7763.4016,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "23590204.80",
+                "cumulative": "22090204.80",
+                "discounted": "18963397.64"
+              },
+              {
+                "year": 2,
+                "flow": "23590204.80",
+                "cumulative": "45680409.60",
+                "discounted": "36714436.54"
+              },
+              {
+                "year": 3,
+                "flow": "23590204.80",
+                "cumulative": "69270614.40",
+                "discounted": "52112631.28"
+              },
+              {
+                "year": 4,
+                "flow": "23590204.80",
+                "cumulative": "92860819.20",
+                "discounted": "65469843.93"
+              },
+              {
+                "year": 5,
+                "flow": "23590204.80",
+                "cumulative": "116451024.00",
+                "discounted": "77056600.21"
+              }
+            ],
+            "capex_items": {
+              "Разовый запуск": "1500000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Аренда с зарядками, ПО и сервисом": "7560000.00"
+            },
+            "cost_per_operation": "174.19",
+            "over_budget": false
+          }
+        ]
+      },
+      {
+        "parameter": "Стоимость оборудования",
+        "delta": 20,
+        "status": "preliminary",
+        "reason": "",
+        "scenarios": [
+          {
+            "mode": "baseline",
+            "name": "Текущий процесс",
+            "capex": "0.00",
+            "opex": "40800000.00",
+            "tco": "204000000.00",
+            "annual_effect": "0.00",
+            "npv": "0.00",
+            "payback": null,
+            "discounted_payback": null,
+            "roi": null,
+            "net_roi": null,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 2,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 3,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 4,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 5,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              }
+            ],
+            "capex_items": {},
+            "opex_items": {
+              "ФОТ": "36000000.00",
+              "Прочие расходы": "4800000.00"
+            },
+            "cost_per_operation": "412.96",
+            "over_budget": false
+          },
+          {
+            "mode": "purchase",
+            "name": "Покупка",
+            "capex": "34804000.00",
+            "opex": "12211795.20",
+            "tco": "95862976.00",
+            "annual_effect": "28588204.80",
+            "npv": "60396198.32",
+            "payback": 1.217425166899602,
+            "discounted_payback": 1.4650945459128655,
+            "roi": 410.7028617400299,
+            "net_roi": 310.7028617400299,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "28588204.80",
+                "cumulative": "-6215795.20",
+                "discounted": "-10005071.48"
+              },
+              {
+                "year": 2,
+                "flow": "28588204.80",
+                "cumulative": "22372409.60",
+                "discounted": "11506837.37"
+              },
+              {
+                "year": 3,
+                "flow": "28588204.80",
+                "cumulative": "50960614.40",
+                "discounted": "30167410.63"
+              },
+              {
+                "year": 4,
+                "flow": "28588204.80",
+                "cumulative": "79548819.20",
+                "discounted": "46354583.82"
+              },
+              {
+                "year": 5,
+                "flow": "28588204.80",
+                "cumulative": "108137024.00",
+                "discounted": "60396198.32"
+              }
+            ],
+            "capex_items": {
+              "Роботы": "21240000.00",
+              "Зарядные станции": "800000.00",
+              "Инфраструктура": "3000000.00",
+              "ПО": "2000000.00",
+              "Интеграция и ПНР": "4000000.00",
+              "Обучение": "600000.00",
+              "Резерв бюджета": "3164000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Сервис": "1062000.00",
+              "Лицензии": "1500000.00"
+            },
+            "cost_per_operation": "123.60",
+            "over_budget": false
+          },
+          {
+            "mode": "rental",
+            "name": "Аренда",
+            "capex": "1500000.00",
+            "opex": "17209795.20",
+            "tco": "87548976.00",
+            "annual_effect": "23590204.80",
+            "npv": "77056600.21",
+            "payback": 0.06358571333810549,
+            "discounted_payback": 0.073301610336168,
+            "roi": 7863.4016,
+            "net_roi": 7763.4016,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "23590204.80",
+                "cumulative": "22090204.80",
+                "discounted": "18963397.64"
+              },
+              {
+                "year": 2,
+                "flow": "23590204.80",
+                "cumulative": "45680409.60",
+                "discounted": "36714436.54"
+              },
+              {
+                "year": 3,
+                "flow": "23590204.80",
+                "cumulative": "69270614.40",
+                "discounted": "52112631.28"
+              },
+              {
+                "year": 4,
+                "flow": "23590204.80",
+                "cumulative": "92860819.20",
+                "discounted": "65469843.93"
+              },
+              {
+                "year": 5,
+                "flow": "23590204.80",
+                "cumulative": "116451024.00",
+                "discounted": "77056600.21"
+              }
+            ],
+            "capex_items": {
+              "Разовый запуск": "1500000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Аренда с зарядками, ПО и сервисом": "7560000.00"
+            },
+            "cost_per_operation": "174.19",
+            "over_budget": false
+          }
+        ]
+      },
+      {
+        "parameter": "Стоимость труда",
+        "delta": -20,
+        "status": "preliminary",
+        "reason": "",
+        "scenarios": [
+          {
+            "mode": "baseline",
+            "name": "Текущий процесс",
+            "capex": "0.00",
+            "opex": "33600000.00",
+            "tco": "168000000.00",
+            "annual_effect": "0.00",
+            "npv": "0.00",
+            "payback": null,
+            "discounted_payback": null,
+            "roi": null,
+            "net_roi": null,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 2,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 3,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 4,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 5,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              }
+            ],
+            "capex_items": {},
+            "opex_items": {
+              "ФОТ": "28800000.00",
+              "Прочие расходы": "4800000.00"
+            },
+            "cost_per_operation": "340.08",
+            "over_budget": false
+          },
+          {
+            "mode": "purchase",
+            "name": "Покупка",
+            "capex": "30910000.00",
+            "opex": "10114795.20",
+            "tco": "81483976.00",
+            "annual_effect": "23485204.80",
+            "npv": "47296944.79",
+            "payback": 1.3161477731716438,
+            "discounted_payback": 1.596291740277266,
+            "roi": 379.8965512779036,
+            "net_roi": 279.8965512779036,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "23485204.80",
+                "cumulative": "-7424795.20",
+                "discounted": "-10537684.94"
+              },
+              {
+                "year": 2,
+                "flow": "23485204.80",
+                "cumulative": "16060409.60",
+                "discounted": "7134344.08"
+              },
+              {
+                "year": 3,
+                "flow": "23485204.80",
+                "cumulative": "39545614.40",
+                "discounted": "22464001.46"
+              },
+              {
+                "year": 4,
+                "flow": "23485204.80",
+                "cumulative": "63030819.20",
+                "discounted": "35761761.16"
+              },
+              {
+                "year": 5,
+                "flow": "23485204.80",
+                "cumulative": "86516024.00",
+                "discounted": "47296944.79"
+              }
+            ],
+            "capex_items": {
+              "Роботы": "17700000.00",
+              "Зарядные станции": "800000.00",
+              "Инфраструктура": "3000000.00",
+              "ПО": "2000000.00",
+              "Интеграция и ПНР": "4000000.00",
+              "Обучение": "600000.00",
+              "Резерв бюджета": "2810000.00"
+            },
+            "opex_items": {
+              "Персонал": "7680000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Сервис": "885000.00",
+              "Лицензии": "1500000.00"
+            },
+            "cost_per_operation": "102.38",
+            "over_budget": false
+          },
+          {
+            "mode": "rental",
+            "name": "Аренда",
+            "capex": "1500000.00",
+            "opex": "15289795.20",
+            "tco": "77948976.00",
+            "annual_effect": "18310204.80",
+            "npv": "59473927.55",
+            "payback": 0.0819215304462351,
+            "discounted_payback": 0.09443914029841982,
+            "roi": 6103.4016,
+            "net_roi": 6003.4016,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "18310204.80",
+                "cumulative": "16810204.80",
+                "discounted": "14383244.97"
+              },
+              {
+                "year": 2,
+                "flow": "18310204.80",
+                "cumulative": "35120409.60",
+                "discounted": "28161215.97"
+              },
+              {
+                "year": 3,
+                "flow": "18310204.80",
+                "cumulative": "53430614.40",
+                "discounted": "40112960.42"
+              },
+              {
+                "year": 4,
+                "flow": "18310204.80",
+                "cumulative": "71740819.20",
+                "discounted": "50480538.88"
+              },
+              {
+                "year": 5,
+                "flow": "18310204.80",
+                "cumulative": "90051024.00",
+                "discounted": "59473927.55"
+              }
+            ],
+            "capex_items": {
+              "Разовый запуск": "1500000.00"
+            },
+            "opex_items": {
+              "Персонал": "7680000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Аренда с зарядками, ПО и сервисом": "7560000.00"
+            },
+            "cost_per_operation": "154.76",
+            "over_budget": false
+          }
+        ]
+      },
+      {
+        "parameter": "Стоимость труда",
+        "delta": 20,
+        "status": "preliminary",
+        "reason": "",
+        "scenarios": [
+          {
+            "mode": "baseline",
+            "name": "Текущий процесс",
+            "capex": "0.00",
+            "opex": "48000000.00",
+            "tco": "240000000.00",
+            "annual_effect": "0.00",
+            "npv": "0.00",
+            "payback": null,
+            "discounted_payback": null,
+            "roi": null,
+            "net_roi": null,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 2,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 3,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 4,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 5,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              }
+            ],
+            "capex_items": {},
+            "opex_items": {
+              "ФОТ": "43200000.00",
+              "Прочие расходы": "4800000.00"
+            },
+            "cost_per_operation": "485.83",
+            "over_budget": false
+          },
+          {
+            "mode": "purchase",
+            "name": "Покупка",
+            "capex": "30910000.00",
+            "opex": "13954795.20",
+            "tco": "100683976.00",
+            "annual_effect": "34045204.80",
+            "npv": "82462290.12",
+            "payback": 0.9079105319407565,
+            "discounted_payback": 1.0537657403359195,
+            "roi": 550.7150566159819,
+            "net_roi": 450.7150566159819,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "34045204.80",
+                "cumulative": "3135204.80",
+                "discounted": "-1377379.60"
+              },
+              {
+                "year": 2,
+                "flow": "34045204.80",
+                "cumulative": "37180409.60",
+                "discounted": "24240785.22"
+              },
+              {
+                "year": 3,
+                "flow": "34045204.80",
+                "cumulative": "71225614.40",
+                "discounted": "46463343.18"
+              },
+              {
+                "year": 4,
+                "flow": "34045204.80",
+                "cumulative": "105270819.20",
+                "discounted": "65740371.25"
+              },
+              {
+                "year": 5,
+                "flow": "34045204.80",
+                "cumulative": "139316024.00",
+                "discounted": "82462290.12"
+              }
+            ],
+            "capex_items": {
+              "Роботы": "17700000.00",
+              "Зарядные станции": "800000.00",
+              "Инфраструктура": "3000000.00",
+              "ПО": "2000000.00",
+              "Интеграция и ПНР": "4000000.00",
+              "Обучение": "600000.00",
+              "Резерв бюджета": "2810000.00"
+            },
+            "opex_items": {
+              "Персонал": "11520000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Сервис": "885000.00",
+              "Лицензии": "1500000.00"
+            },
+            "cost_per_operation": "141.24",
+            "over_budget": false
+          },
+          {
+            "mode": "rental",
+            "name": "Аренда",
+            "capex": "1500000.00",
+            "opex": "19129795.20",
+            "tco": "97148976.00",
+            "annual_effect": "28870204.80",
+            "npv": "94639272.88",
+            "payback": 0.05195668026573888,
+            "discounted_payback": 0.059895661010343784,
+            "roi": 9623.4016,
+            "net_roi": 9523.4016,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "28870204.80",
+                "cumulative": "27370204.80",
+                "discounted": "23543550.31"
+              },
+              {
+                "year": 2,
+                "flow": "28870204.80",
+                "cumulative": "56240409.60",
+                "discounted": "45267657.11"
+              },
+              {
+                "year": 3,
+                "flow": "28870204.80",
+                "cumulative": "85110614.40",
+                "discounted": "64112302.14"
+              },
+              {
+                "year": 4,
+                "flow": "28870204.80",
+                "cumulative": "113980819.20",
+                "discounted": "80459148.98"
+              },
+              {
+                "year": 5,
+                "flow": "28870204.80",
+                "cumulative": "142851024.00",
+                "discounted": "94639272.88"
+              }
+            ],
+            "capex_items": {
+              "Разовый запуск": "1500000.00"
+            },
+            "opex_items": {
+              "Персонал": "11520000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Аренда с зарядками, ПО и сервисом": "7560000.00"
+            },
+            "cost_per_operation": "193.62",
+            "over_budget": false
+          }
+        ]
+      },
+      {
+        "parameter": "Объём операций",
+        "delta": -20,
+        "status": "preliminary",
+        "reason": "",
+        "scenarios": [
+          {
+            "mode": "baseline",
+            "name": "Текущий процесс",
+            "capex": "0.00",
+            "opex": "40800000.00",
+            "tco": "204000000.00",
+            "annual_effect": "0.00",
+            "npv": "0.00",
+            "payback": null,
+            "discounted_payback": null,
+            "roi": null,
+            "net_roi": null,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 2,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 3,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 4,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              },
+              {
+                "year": 5,
+                "flow": "0.00",
+                "cumulative": "0.00",
+                "discounted": "0.00"
+              }
+            ],
+            "capex_items": {},
+            "opex_items": {
+              "ФОТ": "36000000.00",
+              "Прочие расходы": "4800000.00"
+            },
+            "cost_per_operation": "516.19",
+            "over_budget": false
+          },
+          {
+            "mode": "purchase",
+            "name": "Покупка",
+            "capex": "30910000.00",
+            "opex": "12034795.20",
+            "tco": "91083976.00",
+            "annual_effect": "28765204.80",
+            "npv": "64879617.46",
+            "payback": 1.074562139046547,
+            "discounted_payback": 1.2752370336316883,
+            "roi": 465.3058039469427,
+            "net_roi": 365.3058039469427,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "28765204.80",
+                "cumulative": "-2144795.20",
+                "discounted": "-5957532.27"
+              },
+              {
+                "year": 2,
+                "flow": "28765204.80",
+                "cumulative": "26620409.60",
+                "discounted": "15687564.65"
+              },
+              {
+                "year": 3,
+                "flow": "28765204.80",
+                "cumulative": "55385614.40",
+                "discounted": "34463672.32"
+              },
+              {
+                "year": 4,
+                "flow": "28765204.80",
+                "cumulative": "84150819.20",
+                "discounted": "50751066.21"
+              },
+              {
+                "year": 5,
+                "flow": "28765204.80",
+                "cumulative": "112916024.00",
+                "discounted": "64879617.46"
+              }
+            ],
+            "capex_items": {
+              "Роботы": "17700000.00",
+              "Зарядные станции": "800000.00",
+              "Инфраструктура": "3000000.00",
+              "ПО": "2000000.00",
+              "Интеграция и ПНР": "4000000.00",
+              "Обучение": "600000.00",
+              "Резерв бюджета": "2810000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Сервис": "885000.00",
+              "Лицензии": "1500000.00"
+            },
+            "cost_per_operation": "152.26",
+            "over_budget": false
+          },
+          {
+            "mode": "rental",
+            "name": "Аренда",
+            "capex": "1500000.00",
+            "opex": "17209795.20",
+            "tco": "87548976.00",
+            "annual_effect": "23590204.80",
+            "npv": "77056600.21",
+            "payback": 0.06358571333810549,
+            "discounted_payback": 0.073301610336168,
+            "roi": 7863.4016,
+            "net_roi": 7763.4016,
+            "flows": [
+              {
+                "year": 1,
+                "flow": "23590204.80",
+                "cumulative": "22090204.80",
+                "discounted": "18963397.64"
+              },
+              {
+                "year": 2,
+                "flow": "23590204.80",
+                "cumulative": "45680409.60",
+                "discounted": "36714436.54"
+              },
+              {
+                "year": 3,
+                "flow": "23590204.80",
+                "cumulative": "69270614.40",
+                "discounted": "52112631.28"
+              },
+              {
+                "year": 4,
+                "flow": "23590204.80",
+                "cumulative": "92860819.20",
+                "discounted": "65469843.93"
+              },
+              {
+                "year": 5,
+                "flow": "23590204.80",
+                "cumulative": "116451024.00",
+                "discounted": "77056600.21"
+              }
+            ],
+            "capex_items": {
+              "Разовый запуск": "1500000.00"
+            },
+            "opex_items": {
+              "Персонал": "9600000.00",
+              "Сохраняемые прочие расходы": "0.00",
+              "Электроэнергия": "49795.20",
+              "Аренда с зарядками, ПО и сервисом": "7560000.00"
+            },
+            "cost_per_operation": "217.74",
+            "over_budget": false
+          }
+        ]
+      },
+      {
+        "parameter": "Объём операций",
+        "delta": 20,
+        "status": "incompatible",
+        "reason": "Очередь растёт при заданном пиковом потоке",
+        "scenarios": []
+      }
+    ]
+  },
+  "calculated_at": "2026-09-29T16:03:20.044320+00:00"
+}

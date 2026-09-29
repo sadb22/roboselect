@@ -1,8 +1,8 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from core import views as v
 urlpatterns=[
- path('',v.index),path('admin/',admin.site.urls),path('health/',v.health),
+ path('',include('workflow.urls')),path('legacy/',v.index),path('admin/',admin.site.urls),path('health/',v.health),
  path('api/bootstrap/',v.bootstrap),path('api/catalog/',v.catalog),path('api/calculate/',v.calculate_view),
  path('api/auth/<str:action>/',v.auth_view),path('api/projects/',v.projects),
  path('api/projects/<uuid:id>/',v.project_detail),path('api/projects/<uuid:id>/copy/',v.project_copy),

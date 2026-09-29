@@ -1,0 +1,98 @@
+{
+  "sources_version": "2026-09-28-v1",
+  "sources": [
+    {
+      "source_id": "moros-amr800-spec",
+      "kind": "txt",
+      "path": "snapshots/moros_amr800.txt",
+      "source_url": "https://xn--l1aeahg.xn--p1ai/amr-800/",
+      "acquired_at": null,
+      "model_key": "moros-amr800",
+      "model_name": "AMR800",
+      "manufacturer": "МОРОС",
+      "adapter": "moros",
+      "category": "warehouse",
+      "scenario_codes": [
+        "warehouse_general_transport"
+      ]
+    },
+    {
+      "source_id": "ronavi-h1500-spec",
+      "kind": "txt",
+      "path": "snapshots/ronavi_h1500.txt",
+      "source_url": "https://ronavi-robotics.ru/catalogue/h1500",
+      "acquired_at": null,
+      "model_key": "ronavi-h1500",
+      "model_name": "Ronavi H1500",
+      "manufacturer": "Ronavi Robotics",
+      "adapter": "ronavi",
+      "supplier": "Ronavi Robotics",
+      "category": "warehouse",
+      "scenario_codes": [
+        "warehouse_general_transport",
+        "warehouse_pallet_transport",
+        "warehouse_g2p"
+      ]
+    },
+    {
+      "source_id": "geek-m1000-spec",
+      "kind": "txt",
+      "path": "snapshots/geek_m1000.txt",
+      "source_url": "https://robob2b.ru/catalog/mobilnye-roboty/transportnyy-amr-robot-geek-m1000/",
+      "acquired_at": null,
+      "model_key": "geek-m1000",
+      "model_name": "Geek+ M1000",
+      "manufacturer": "Geek+",
+      "adapter": "robob2b",
+      "supplier": "RoboB2B",
+      "category": "warehouse",
+      "scenario_codes": [
+        "warehouse_general_transport",
+        "warehouse_g2p"
+      ]
+    },
+    {
+      "source_id": "seer-sfl-cbd15-spec",
+      "kind": "txt",
+      "path": "snapshots/seer_sfl_cbd15.txt",
+      "source_url": "https://robob2b.ru/catalog/mobilnye-roboty/transportnyy-robot-dlya-peremeshcheniya-pallet-seer-sfl-cbd15/",
+      "acquired_at": null,
+      "model_key": "seer-sfl-cbd15",
+      "model_name": "SEER SFL-CBD15",
+      "manufacturer": "SEER Robotics",
+      "adapter": "robob2b",
+      "supplier": "RoboB2B",
+      "category": "warehouse",
+      "scenario_codes": [
+        "warehouse_general_transport",
+        "warehouse_pallet_transport",
+        "warehouse_low_lift"
+      ]
+    },
+    {
+      "source_id": "automacon-ak600-spec",
+      "kind": "txt",
+      "path": "snapshots/automacon_ak600.txt",
+      "source_url": "https://robob2b.ru/catalog/mobilnye-roboty/transportnyy-amr-robot-automacon-ak-600/",
+      "acquired_at": null,
+      "model_key": "automacon-ak600",
+      "model_name": "AUTOMACON AK-600",
+      "manufacturer": "АВТОМАКОН",
+      "adapter": "robob2b",
+      "supplier": "RoboB2B",
+      "category": "warehouse",
+      "scenario_codes": [
+        "warehouse_general_transport",
+        "warehouse_g2p"
+      ]
+    },
+    {
+      "source_id": "catalog-export-v4",
+      "kind": "csv",
+      "path": "data/catalog_export_v4.csv",
+      "source_url": null,
+      "acquired_at": null,
+      "adapter": "catalog_v4"
+    }
+  ]
+}

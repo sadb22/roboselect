@@ -13,7 +13,7 @@ if render_hostname:
     ALLOWED_HOSTS.append(render_hostname)
     CSRF_TRUSTED_ORIGINS.append('https://' + render_hostname)
 INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes',
-                  'django.contrib.sessions', 'django.contrib.messages', 'django.contrib.staticfiles', 'core']
+                  'django.contrib.sessions', 'django.contrib.messages', 'django.contrib.staticfiles', 'core', 'workflow']
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'whitenoise.middleware.WhiteNoiseMiddleware',
               'django.contrib.sessions.middleware.SessionMiddleware', 'django.middleware.common.CommonMiddleware',
               'django.middleware.csrf.CsrfViewMiddleware', 'django.contrib.auth.middleware.AuthenticationMiddleware',

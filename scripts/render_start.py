@@ -14,10 +14,11 @@ def main():
     port = int(os.environ.get('PORT', '10000'))
     if not 1 <= port <= 65535:
         raise SystemExit('PORT must be between 1 and 65535')
-    for command in [('migrate', '--noinput'), ('seed_data',)]:
+    for command in [('migrate', '--noinput'), ('seed_data',), ('initialize_workflow',)]:
         subprocess.run([sys.executable, 'manage.py', *command], check=True)
     children = []
     stopping = False
+    next_deadline_check = time.monotonic()
 
     def stop(signum, frame):
         nonlocal stopping
@@ -33,6 +34,12 @@ def main():
             '--timeout', '75', '--access-logfile', '-', '--error-logfile', '-',
         ]))
         while not stopping:
+            if time.monotonic() >= next_deadline_check:
+                try:
+                    subprocess.run([sys.executable,'manage.py','check_supplier_deadlines'],check=True,timeout=30)
+                except (subprocess.SubprocessError,OSError):
+                    print('Supplier deadline check failed; will retry.',flush=True)
+                next_deadline_check=time.monotonic()+900
             if any(child.poll() is not None for child in children):
                 print('A service exited; restarting the instance is required.', flush=True)
                 return 1

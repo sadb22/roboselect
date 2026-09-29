@@ -1,0 +1,6 @@
+<section class="panel"><h2>Воспроизведение симуляции</h2>
+<p>Положение значков отражает события рассчитанного прогона. Размещение зон схематическое. Покупка и аренда одинакового парка имеют одинаковые технические показатели.</p>
+<div class="actions"><button type="button" id="sim-play">Запустить</button><button type="button" id="sim-pause" class="secondary">Остановить</button><button type="button" id="sim-reset" class="secondary">Сначала</button><label>Скорость <select id="sim-speed"><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></label><button type="button" id="sim-image" class="secondary">Сохранить PNG</button></div>
+<p id="sim-clock" aria-live="off"></p><canvas id="workflow-playback" width="1100" height="520" style="width:100%;height:auto" aria-label="Зоны склада, маршруты, исполнители и зарядные станции"></canvas>
+{{ result.simulation|json_script:'simulation-data' }}{{ config.version.requirements|json_script:'simulation-requirements' }}{{ result.groups|json_script:'simulation-groups' }}
+</section>

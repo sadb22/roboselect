@@ -1,0 +1,748 @@
+{
+  "from": "legacy-105",
+  "to": "2026-09-28-v3",
+  "mappings": [
+    {
+      "old_key": "robot_id",
+      "old_label": "ID робота",
+      "destination": "robot_id",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "catalog_type",
+      "old_label": "тип (поле каталога)",
+      "destination": "catalog_observations:тип",
+      "status": "moved_or_excluded",
+      "explanation": "Сохраняется отдельно как исходная ячейка; не объединяется с «Тип»."
+    },
+    {
+      "old_key": "catalog_status",
+      "old_label": "статус",
+      "destination": "catalog_status",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "company",
+      "old_label": "компания",
+      "destination": "company",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "description",
+      "old_label": "описание",
+      "destination": "catalog_observations:описание",
+      "status": "moved_or_excluded",
+      "explanation": "Ручное текстовое поле, не ТТХ; сырой текст сохранён."
+    },
+    {
+      "old_key": "catalog_type_alt",
+      "old_label": "Тип (поле каталога)",
+      "destination": "catalog_observations:Тип",
+      "status": "moved_or_excluded",
+      "explanation": "Сохраняется отдельно как исходная ячейка; не объединяется с «тип»."
+    },
+    {
+      "old_key": "subtype",
+      "old_label": "Подтип",
+      "destination": "catalog_observations:Подтип",
+      "status": "moved_or_excluded",
+      "explanation": "Ручная классификация, сырой текст сохранён."
+    },
+    {
+      "old_key": "scenario",
+      "old_label": "Сценарий",
+      "destination": "scenario",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "cases",
+      "old_label": "Кейсы",
+      "destination": "catalog_observations:Кейсы",
+      "status": "moved_or_excluded",
+      "explanation": "Ручное поле, сырой текст сохранён."
+    },
+    {
+      "old_key": "trl",
+      "old_label": "УГТ",
+      "destination": "trl",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "market_potential",
+      "old_label": "Рын Потенциал",
+      "destination": "market_potential",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "region",
+      "old_label": "Регион",
+      "destination": "catalog_observations:Регион",
+      "status": "moved_or_excluded",
+      "explanation": "Ручное поле, сырой текст сохранён."
+    },
+    {
+      "old_key": "industry",
+      "old_label": "Отрасль",
+      "destination": "industry",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "product_price_raw",
+      "old_label": "Цена изделия (как в источнике)",
+      "destination": "product_price_raw",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "price_min",
+      "old_label": "Цена изделия — нижняя граница",
+      "destination": "price_min",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "price_max",
+      "old_label": "Цена изделия — верхняя граница",
+      "destination": "price_max",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "currency",
+      "old_label": "Валюта цены",
+      "destination": "currency",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "price_conditions",
+      "old_label": "Условия цены",
+      "destination": "offers.raw_conditions",
+      "status": "moved_or_excluded",
+      "explanation": "Коммерческие условия сохраняются рядом с предложением."
+    },
+    {
+      "old_key": "model",
+      "old_label": "Модель",
+      "destination": "model",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "manufacturer",
+      "old_label": "Производитель",
+      "destination": "manufacturer",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "series",
+      "old_label": "Серия",
+      "destination": "series",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "sku",
+      "old_label": "Артикул",
+      "destination": "sku",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "solution_type",
+      "old_label": "Тип робота / решения",
+      "destination": "platform_manual",
+      "status": "moved_or_excluded",
+      "explanation": "Тип решения требует отдельного определения; не объединён с catalog_class."
+    },
+    {
+      "old_key": "intended_use",
+      "old_label": "Назначение / операции",
+      "destination": "intended_use",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "origin_country",
+      "old_label": "Страна производства",
+      "destination": "unknown_labels / raw source",
+      "status": "moved_or_excluded",
+      "explanation": "Необязательная метка вне согласованного ТТХ."
+    },
+    {
+      "old_key": "availability_status",
+      "old_label": "Статус доступности",
+      "destination": "platform_manual",
+      "status": "moved_or_excluded",
+      "explanation": "Не равен статусу каталога; нужна ручная запись платформы."
+    },
+    {
+      "old_key": "acquisition_model",
+      "old_label": "Модель приобретения",
+      "destination": "offers.transaction_type",
+      "status": "moved_or_excluded",
+      "explanation": "Коммерческий тип предложения; нет прямого переноса без проверки."
+    },
+    {
+      "old_key": "warranty",
+      "old_label": "Гарантия",
+      "destination": "unknown_labels / raw source",
+      "status": "moved_or_excluded",
+      "explanation": "Гарантия относится к предложению; автоматический перенос не реализован."
+    },
+    {
+      "old_key": "length",
+      "old_label": "Длина робота",
+      "destination": "length",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "width",
+      "old_label": "Ширина робота",
+      "destination": "width",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "height",
+      "old_label": "Высота робота",
+      "destination": "height",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "robot_mass",
+      "old_label": "Масса робота",
+      "destination": "robot_mass",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "travel_speed",
+      "old_label": "Скорость движения (режим не указан)",
+      "destination": "travel_speed",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "runtime",
+      "old_label": "Время автономной работы",
+      "destination": "runtime",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "runtime_conditions",
+      "old_label": "Условия замера автономности",
+      "destination": "observations.conditions",
+      "status": "moved_or_excluded",
+      "explanation": "Условия замера при каждом наблюдении, не общий атрибут робота."
+    },
+    {
+      "old_key": "charging_time",
+      "old_label": "Время зарядки",
+      "destination": "charging_time",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "charging_method",
+      "old_label": "Способ зарядки",
+      "destination": "charging_requirements",
+      "status": "moved_or_excluded",
+      "explanation": "Текст о способе зарядки, логика условий требует проверки."
+    },
+    {
+      "old_key": "battery_chemistry",
+      "old_label": "Тип аккумулятора",
+      "destination": "battery_chemistry",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "battery_capacity",
+      "old_label": "Ёмкость аккумулятора",
+      "destination": "battery_capacity",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "battery_voltage",
+      "old_label": "Номинальное напряжение",
+      "destination": "battery_voltage",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "battery_life",
+      "old_label": "Ресурс аккумулятора",
+      "destination": "battery_life",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "charging_input",
+      "old_label": "Параметры питания зарядки",
+      "destination": "charging_input",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "electricity_consumption",
+      "old_label": "Потребление электроэнергии",
+      "destination": "electricity_consumption",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "electricity_basis",
+      "old_label": "Период и режим потребления",
+      "destination": "electricity_basis",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "drive_type",
+      "old_label": "Тип привода",
+      "destination": "unknown_labels / raw source",
+      "status": "moved_or_excluded",
+      "explanation": "Необязательная метка вне согласованного ТТХ."
+    },
+    {
+      "old_key": "drive_wheels",
+      "old_label": "Количество ведущих колёс",
+      "destination": "unknown_labels / raw source",
+      "status": "moved_or_excluded",
+      "explanation": "Число колёс не включено в новый контракт; исходный текст в отчёте."
+    },
+    {
+      "old_key": "navigation_type",
+      "old_label": "Тип навигации",
+      "destination": "navigation_type",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "positioning_accuracy",
+      "old_label": "Линейная точность позиционирования",
+      "destination": "positioning_accuracy",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "angular_accuracy",
+      "old_label": "Угловая точность позиционирования",
+      "destination": "angular_accuracy",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "qr_precise_positioning",
+      "old_label": "Точное позиционирование по QR",
+      "destination": "qr_precise_positioning",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "operating_temperature",
+      "old_label": "Рабочая температура",
+      "destination": "operating_temperature",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "ip_rating",
+      "old_label": "Степень защиты корпуса",
+      "destination": "ip_rating",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "turning_diameter",
+      "old_label": "Диаметр разворота",
+      "destination": "turning_diameter",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "min_aisle_width",
+      "old_label": "Минимальная ширина проезда",
+      "destination": "min_aisle_width",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "max_grade",
+      "old_label": "Максимальный уклон",
+      "destination": "max_grade",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "obstacle_height",
+      "old_label": "Преодолеваемый порог / препятствие",
+      "destination": "obstacle_height",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "floor_requirements",
+      "old_label": "Требования к покрытию пола",
+      "destination": "floor_requirements",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "charging_requirements",
+      "old_label": "Требования к зарядной инфраструктуре",
+      "destination": "charging_requirements",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "connectivity",
+      "old_label": "Связь и интерфейсы",
+      "destination": "connectivity",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "wifi_roaming",
+      "old_label": "Wi-Fi роуминг",
+      "destination": "wifi_roaming",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "integration",
+      "old_label": "Интеграция с ПО",
+      "destination": "integration",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "open_api",
+      "old_label": "Открытое API",
+      "destination": "open_api",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "handled_load",
+      "old_label": "Тип перемещаемого груза",
+      "destination": "handled_load",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "payload",
+      "old_label": "Грузоподъёмность",
+      "destination": "payload",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "payload_qualifier",
+      "old_label": "Условие грузоподъёмности",
+      "destination": "payload_qualifier",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "towing_capacity",
+      "old_label": "Буксируемая масса",
+      "destination": "towing_capacity",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "loaded_speed",
+      "old_label": "Максимальная скорость с грузом",
+      "destination": "loaded_speed",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "unloaded_speed",
+      "old_label": "Максимальная скорость без груза",
+      "destination": "unloaded_speed",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "acceleration",
+      "old_label": "Ускорение",
+      "destination": "acceleration",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "deceleration",
+      "old_label": "Замедление",
+      "destination": "deceleration",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "fork_length",
+      "old_label": "Длина вил",
+      "destination": "fork_length",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "fork_width",
+      "old_label": "Ширина вил",
+      "destination": "fork_width",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "fork_height",
+      "old_label": "Высота вил",
+      "destination": "fork_height",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "fork_fourth_dimension",
+      "old_label": "Четвёртый размер вил («Т»)",
+      "destination": "fork_fourth_dimension",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "fork_dimensions_raw",
+      "old_label": "Габариты вил — исходная запись",
+      "destination": "issues.raw / observations where complete",
+      "status": "moved_or_excluded",
+      "explanation": "Неполные размеры вил остаются замечанием; исходная фраза не теряется."
+    },
+    {
+      "old_key": "load_center",
+      "old_label": "Расстояние до центра нагрузки",
+      "destination": "load_center",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "lift_height",
+      "old_label": "Высота подъёма",
+      "destination": "lift_height",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "compatible_pallet",
+      "old_label": "Тип совместимого поддона",
+      "destination": "compatible_pallet",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "load_length",
+      "old_label": "Допустимая длина груза",
+      "destination": "load_length",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "load_width",
+      "old_label": "Допустимая ширина груза",
+      "destination": "load_width",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "load_height",
+      "old_label": "Допустимая высота груза",
+      "destination": "load_height",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "operations_per_hour",
+      "old_label": "Производительность",
+      "destination": "operations_per_hour",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "automatic_braking",
+      "old_label": "Автоторможение при препятствии",
+      "destination": "automatic_braking",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "emergency_buttons",
+      "old_label": "Кнопки аварийной остановки",
+      "destination": "emergency_buttons",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "obstacle_avoidance_3d",
+      "old_label": "3D-обход препятствий",
+      "destination": "obstacle_avoidance_3d",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "bumper",
+      "old_label": "Защитный бампер",
+      "destination": "bumper",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "shelf_recognition",
+      "old_label": "Распознавание полок",
+      "destination": "shelf_recognition",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "pallet_recognition",
+      "old_label": "Распознавание поддонов",
+      "destination": "pallet_recognition",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "display",
+      "old_label": "Дисплей",
+      "destination": "display",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "speaker",
+      "old_label": "Динамик",
+      "destination": "speaker",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "omnidirectional",
+      "old_label": "Смена направления без разворота",
+      "destination": "omnidirectional",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "attachment_support",
+      "old_label": "Крепления / навесное оснащение",
+      "destination": "unknown_labels / raw source",
+      "status": "moved_or_excluded",
+      "explanation": "Необязательная метка вне согласованного ТТХ."
+    },
+    {
+      "old_key": "cleaning_mode",
+      "old_label": "Режим / способ уборки",
+      "destination": "cleaning_mode",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "cleaning_productivity",
+      "old_label": "Производительность уборки",
+      "destination": "cleaning_productivity",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "cleaning_width",
+      "old_label": "Ширина уборки",
+      "destination": "cleaning_width",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "clean_water_tank",
+      "old_label": "Бак чистой воды",
+      "destination": "clean_water_tank",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "dirty_water_tank",
+      "old_label": "Бак грязной воды",
+      "destination": "dirty_water_tank",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "dust_tank",
+      "old_label": "Мусоросборник",
+      "destination": "dust_tank",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "supported_surfaces",
+      "old_label": "Поддерживаемые покрытия",
+      "destination": "supported_surfaces",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "noise_level",
+      "old_label": "Уровень шума",
+      "destination": "noise_level",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "auto_refill_drain",
+      "old_label": "Автоматическое наполнение и слив",
+      "destination": "auto_refill_drain",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "source_url",
+      "old_label": "URL источника",
+      "destination": "source_url",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "retrieved_at",
+      "old_label": "Дата проверки",
+      "destination": "retrieved_at",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "raw_quote",
+      "old_label": "Исходная формулировка",
+      "destination": "raw_quote",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": "verification_status",
+      "old_label": "Статус проверки значения",
+      "destination": "verification_status",
+      "status": "unchanged",
+      "explanation": "Ключ и семантика сохранены в новом контракте."
+    },
+    {
+      "old_key": null,
+      "old_label": null,
+      "destination": "catalog_class",
+      "status": "new_manual",
+      "explanation": "Новый ручной класс; не является переименованием ни «тип», ни «Тип»."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{% load workflow_tags %}
+<h2>Заключение</h2><p>{{ result.conclusion }}</p>
+<details><summary>Состав CAPEX и OPEX</summary>{% for s in result.scenarios %}<h3>{{ s.name }}</h3><table><tr><th>Статья</th><th>Сумма, руб.</th></tr>{% for name,value in s.capex_items.items %}<tr><td>CAPEX: {{ name }}</td><td>{{ value|money }}</td></tr>{% endfor %}{% for name,value in s.opex_items.items %}<tr><td>OPEX/год: {{ name }}</td><td>{{ value|money }}</td></tr>{% endfor %}</table>{% endfor %}</details>
+<h2>Чувствительность</h2>
+<p>Изменение на 20% при сохранении состава парка. Если выросший поток невыполним, экономика этого варианта блокируется.</p>
+<div class="scroll"><table><tr><th>Параметр</th><th>Изменение</th><th>Проверка</th><th>Сценарии: TCO</th></tr>
+{% for row in result.sensitivity %}<tr><td>{{ row.parameter }}</td><td>{{ row.delta }}%</td><td>{{ row.status|status }} {{ row.reason }}</td><td>{% for s in row.scenarios %}{{ s.name }}: {{ s.tco|money }} руб.<br>{% endfor %}</td></tr>{% endfor %}</table></div>
+<details><summary>Формулы и допущения</summary>
+<p>TCO = стартовые затраты + ежегодные расходы × горизонт. Годовой денежный эффект = расходы текущего процесса минус расходы сценария. ROI по ТЗ = накопленный денежный эффект / CAPEX × 100%. NPV = сумма дисконтированных годовых эффектов минус CAPEX. Простая окупаемость = CAPEX / положительный годовой эффект.</p>
+<p>Собственные средства, постоянные цены с НДС, налоговые эффекты и ликвидационная стоимость не учитываются. CAPEX включается в денежный поток один раз; амортизация не вычитается повторно. Аренда продлевается на весь горизонт по постоянному тарифу, без выкупа. Прочие сохраняемые расходы задаются отдельно. Резерв парка 10%, округление вверх; резерв не увеличивает производительность.</p>
+</details>

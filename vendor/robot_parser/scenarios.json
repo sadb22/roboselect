@@ -1,0 +1,65 @@
+{
+  "version": "2026-09-29-v1",
+  "scenarios": [
+    {
+      "code": "warehouse_general_transport",
+      "category": "warehouse",
+      "name": "Перевозка груза между зонами",
+      "description": "Перемещение грузовой единицы по объекту"
+    },
+    {
+      "code": "warehouse_pallet_transport",
+      "category": "warehouse",
+      "name": "Перевозка паллет",
+      "description": "Напольное перемещение паллет"
+    },
+    {
+      "code": "warehouse_g2p",
+      "category": "warehouse",
+      "name": "Подвоз груза или стеллажа к оператору",
+      "description": "Сценарий goods-to-person"
+    },
+    {
+      "code": "warehouse_low_lift",
+      "category": "warehouse",
+      "name": "Подхват и перемещение паллет",
+      "description": "Низкий подъём для движения с паллетой; не штабелирование"
+    },
+    {
+      "code": "warehouse_rack_stacking",
+      "category": "warehouse",
+      "name": "Размещение паллет на стеллажах",
+      "description": "Высотный подъём и постановка на ярус"
+    },
+    {
+      "code": "warehouse_towing",
+      "category": "warehouse",
+      "name": "Буксировка тележек",
+      "description": "Буксировка без перевозки груза на платформе"
+    },
+    {
+      "code": "warehouse_sorting",
+      "category": "warehouse",
+      "name": "Сортировка грузов",
+      "description": "Распределение по направлениям"
+    },
+    {
+      "code": "cleaning_dry",
+      "category": "cleaning",
+      "name": "Сухая уборка пола",
+      "description": "Подметание, сбор пыли и мусора"
+    },
+    {
+      "code": "cleaning_wet",
+      "category": "cleaning",
+      "name": "Влажная уборка пола",
+      "description": "Мойка твёрдых покрытий"
+    },
+    {
+      "code": "cleaning_combined",
+      "category": "cleaning",
+      "name": "Подметание и мойка за проход",
+      "description": "Два действия в одном цикле"
+    }
+  ]
+}
