@@ -9,8 +9,8 @@
 ### Windows PowerShell
 
 ```powershell
-git clone https://github.com/sadb22/roboscope.git
-cd roboscope
+git clone https://github.com/sadb22/roboselect.git
+cd roboselect
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.lock
 $env:DEBUG="1"
@@ -22,8 +22,8 @@ $env:PASSWORDLESS_DEMO="1"
 ### Linux и macOS
 
 ```bash
-git clone https://github.com/sadb22/roboscope.git
-cd roboscope
+git clone https://github.com/sadb22/roboselect.git
+cd roboselect
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.lock
