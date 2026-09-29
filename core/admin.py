@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, Normative, Project, ProjectVersion, SimulationRun
-admin.site.site_header = 'Робоскоп · управление'
-admin.site.site_title = 'Робоскоп'
+admin.site.site_header = 'RoboSelect · управление'
+admin.site.site_title = 'RoboSelect'
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'company', 'subtype', 'status', 'price', 'updated_at']

@@ -5,13 +5,13 @@ import re
 # Число может быть коротким; валюту требуем отдельно от числа.
 NUMBER=re.compile(r'(?<![\w])([+\-−]?\d+(?:[ \u00a0\u202f]\d{3})*(?:[,.]\d{1,2})?)(?![\w\d.,])')
 CURRENCY=re.compile(r'₽|\bруб(?:\.|лей|ля)?\b|\b(?:RUB|USD|EUR)\b|€',re.I)
-PERIOD=re.compile(r'(?:/|в\s+)(?:\s*)(месяц|мес\.?|день|сутки|год|недел[яю])\b',re.I)
+PERIOD=re.compile(r'(?:/|в\s+|per\s+)(?:\s*)(месяц|мес\.?|день|сутки|год|недел[яю]|month|day|year|week)\b',re.I)
 
 def parse(text,source_id,model_key,supplier=None,full_text=None):
     """Возвращает предложение или причину проверки; контекст не меняет вид сделки."""
     low=text.casefold().replace('ё','е')
     full=full_text or text
-    if not re.search(r'\bцена\b|₽|\bруб|\b(?:rub|usd|eur)\b|€',low,re.I):
+    if not re.search(r'\b(?:цена|price)\b|₽|\bруб|\b(?:rub|usd|eur)\b|€',low,re.I):
         return None,'Не найдено обозначение цены'
     currency_matches=list(CURRENCY.finditer(text))
     codes=[]
@@ -22,12 +22,10 @@ def parse(text,source_id,model_key,supplier=None,full_text=None):
     cur=codes[0] if codes else None
     quantity=re.search(r'при\s+покупке\s+от\s+(\d+)\s*шт',low)
     vat=re.search(r'(без ндс|с ндс|ндс\s*\d+\s*%)',low)
-    rental=bool(re.search(r'\bаренд[аыуеы]|\bпрокат\b',low))
-    service=bool(re.search(r'\bуслуг[ауы]|\bподписк',low))
+    rental=bool(re.search(r'\bаренд[аыуеы]|\bпрокат\b|\brent(?:al)?\b|\blease\b',low))
+    service=bool(re.search(r'\bуслуг[ауы]|\bподписк|\bservice\b|\bsubscription\b',low))
     kind='rental' if rental else 'service' if service else 'purchase'
     period=PERIOD.search(low)
-    if period and not (rental or service):
-        return None,'Периодическая цена: требуется уточнить вид сделки'
     amounts=[]
     for m in NUMBER.finditer(text.translate(str.maketrans({'−':'-'}))):
         tail=text[m.end():].lstrip().lower()
@@ -43,7 +41,7 @@ def parse(text,source_id,model_key,supplier=None,full_text=None):
            'included_items':None,'vat':vat.group(1) if vat else None,'raw_conditions':full,
            'raw_offer':text,'currency':cur,'price_min':None,'price_max':None,
            'price_kind':'unknown','requires_review':False}
-    if 'по запросу' in low and not amounts:return offer,None
+    if ('по запросу' in low or 'on request' in low or 'contact for price' in low) and not amounts:return offer,None
     if not amounts or not cur:return None,'Сумма или валюта не распознаны'
     if len(amounts)>2:return None,'Несколько цен без однозначного условия'
     if kind in ('rental','service') and not period:offer['requires_review']=True
@@ -52,9 +50,9 @@ def parse(text,source_id,model_key,supplier=None,full_text=None):
         offer['price_min'],offer['price_max']=map(str,amounts)
         offer['price_kind']='range'
         if 'зависит от комплектации' in low:offer['requires_review']=True
-    elif re.search(r'\b(?:не более|до)\s*[+\-−]?\d',low):
+    elif re.search(r'\b(?:не более|до|up to|at most)\s*[+\-−]?\d',low):
         offer['price_max']=str(amounts[0]);offer['price_kind']='upper_bound'
-    elif re.search(r'\b(?:от|не менее)\b',low):
+    elif re.search(r'\b(?:от|не менее|from|at least)\b',low):
         offer['price_min']=str(amounts[0]);offer['price_kind']='lower_bound'
     else:
         offer['price_min']=offer['price_max']=str(amounts[0]);offer['price_kind']='exact'

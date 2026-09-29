@@ -14,5 +14,5 @@ class Command(BaseCommand):
             return
         self.stdout.write(f'Workflow: added demo cards {len(seed(user))}')
         seed_references(user)
-        if not ImportBatch.objects.filter(filename='parser-3.1.1').exists():
+        if not ImportBatch.objects.filter(filename='parser-3.3.0').exists():
             call_command('import_robot_parser',user=user.username)

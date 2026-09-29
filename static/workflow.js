@@ -1,6 +1,6 @@
 const csrf=()=>document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))?.split('=')[1]||document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-async function auth(action,data){const r=await fetch('/api/auth/'+action+'/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrf()},body:JSON.stringify(data)});const result=await r.json();if(!r.ok)throw Error(result.error);location.href='/studies/';}
-document.querySelector('#auth')?.addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);try{await auth(e.submitter.value,{username:f.get('username'),password:f.get('password')});}catch(err){document.querySelector('#auth-error').textContent=err.message;}});
+async function auth(action,data){const r=await fetch('/api/auth/'+action+'/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrf()},body:JSON.stringify(data)});const result=await r.json();if(!r.ok)throw Error(result.error);location.href=action==='logout'?'/':result.admin&&new URLSearchParams(location.search).get('role')==='admin'?'/workspace/robots/':'/studies/';}
+document.querySelector('#auth')?.addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);try{await auth(e.submitter.value,{username:f.get('username'),password:f.get('password'),role:new URLSearchParams(location.search).get('role')});}catch(err){document.querySelector('#auth-error').textContent=err.message;}});
 document.querySelector('#logout')?.addEventListener('click',()=>auth('logout',{}));
 const initial=document.querySelector('#initial-requirements');
 if(initial){

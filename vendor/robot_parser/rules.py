@@ -1,7 +1,7 @@
 """Словарь меток: добавлять алиасы здесь, не меняя pipeline."""
 import re
 
-VERSION = '2026-09-28-v3'
+VERSION = '2026-09-29-v4-en'
 ALIASES = {
  'length':[r'^длина(?: робота)?(?:,.*)?$'],
  'width':[r'^ширина(?: робота)?(?:,.*)?$'],
@@ -48,7 +48,40 @@ ALIASES = {
  'series':[r'^серия$'], 'manufacturer':[r'^бренд$|^производитель$'],
  'battery_chemistry':[r'^питание$'],
 }
-DIMENSIONS = re.compile(r'^(?:габаритн\w* размер\w*|габарит\w*)(?:\s*\([^)]*\))?(?:,.*)?$', re.I)
+EN_ALIASES={
+ 'length':[r'^length(?:\s*[,(:].*)?$'],
+ 'width':[r'^width(?:\s*[,(:].*)?$'],
+ 'height':[r'^height(?:\s*[,(:].*)?$'],
+ 'robot_mass':[r'^(?:robot\s+)?(?:weight|mass)(?:\s*[,(:].*)?$'],
+ 'payload':[r'\b(?:payload(?:\s+capacity)?|load\s+capacity|carrying\s+capacity|maximum\s+load)\b'],
+ 'loaded_speed':[r'\b(?:speed\s+(?:with|under)\s+load|loaded\s+speed)\b'],
+ 'unloaded_speed':[r'\b(?:speed\s+without\s+load|unloaded\s+speed)\b'],
+ 'travel_speed':[r'\b(?:travel\s+speed|maximum\s+speed|max\.?\s+speed|moving\s+speed)\b'],
+ 'lift_height':[r'\b(?:lift(?:ing)?\s+height|fork\s+lift\s+height)\b'],
+ 'turning_diameter':[r'\bturning\s+diameter\b'],
+ 'max_grade':[r'\b(?:gradeability|maximum\s+gradient|slope\s+capacity)\b'],
+ 'navigation_type':[r'\b(?:navigation(?:\s+(?:type|method|system))?|guidance\s+system)\b'],
+ 'positioning_accuracy':[r'\b(?:positioning|localization)\s+accuracy\b'],
+ 'angular_accuracy':[r'\bangular\s+accuracy\b'],
+ 'battery_capacity':[r'\bbattery\s+capacity\b'],
+ 'battery_voltage':[r'\bbattery\s+voltage\b'],
+ 'battery_chemistry':[r'\bbattery\s+(?:type|chemistry)\b'],
+ 'runtime':[r'\b(?:runtime|run\s*time|operating\s*time|working\s+time|battery\s+life\s+per\s+charge)\b'],
+ 'charging_time':[r'\b(?:charging|charge)\s+time\b'],
+ 'operating_temperature':[r'\b(?:operating|working)\s+temperature\b'],
+ 'min_aisle_width':[r'\bminimum\s+aisle\s+width\b'],
+ 'fork_width':[r'\bfork\s+width\b'],
+ 'fork_length':[r'\bfork\s+length\b'],
+ 'emergency_buttons':[r'\bemergency\s+stop\s+buttons?\b'],
+ 'ip_rating':[r'\b(?:ip\s+rating|ingress\s+protection)\b'],
+ 'cleaning_width':[r'\b(?:cleaning|scrubbing)\s+width\b'],
+ 'cleaning_productivity':[r'\b(?:cleaning\s+productivity|cleaning\s+capacity|area\s+coverage)\b'],
+ 'clean_water_tank':[r'\b(?:clean|fresh|solution)\s+water\s+tank\b'],
+ 'dirty_water_tank':[r'\b(?:dirty|waste|recovery)\s+water\s+tank\b'],
+ 'noise_level':[r'\bnoise\s+level\b'],
+}
+for key,patterns in EN_ALIASES.items():ALIASES.setdefault(key,[]).extend(patterns)
+DIMENSIONS = re.compile(r'^(?:габаритн\w* размер\w*|габарит\w*|(?:overall\s+)?dimensions?)(?:\s*\([^)]*\))?(?:,.*)?$', re.I)
 FORK_DIMS = re.compile(r'габарит\w* вил(?:ки)?',re.I)
 IGNORE = [r'^параметр$',r'^страна производства$',r'^тип привода$',r'^крепления$']
 

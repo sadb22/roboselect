@@ -25,7 +25,7 @@ def num(value,name,low=0,high=1e12,integer=False):
 def equipment_data(data):
     d=dict(data)
     for k in ['manufacturer','model','source','configuration']:
-        d[k]=str(d.get(k,'')).strip()
+        d[k]=str(d.get(k) or '').strip()
         if not d[k] or len(d[k])>500:raise ValueError(f'{k}: обязательное поле, до 500 символов')
     d['sku']=str(d.get('sku',''))[:120]
     d['operations']=list(d.get('operations',[]))

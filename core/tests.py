@@ -1,3 +1,4 @@
+from django.test import override_settings
 import io
 import json
 from copy import deepcopy
@@ -12,6 +13,7 @@ from .engine import defaults, validate, calculate, product_dict, applicability, 
 from .models import Product, Project, ProjectVersion, SimulationRun, Normative
 from .simulation import simulate
 
+@override_settings(PASSWORDLESS_DEMO=False)
 class ModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -122,6 +124,7 @@ class ModelTests(TestCase):
         v=defaults();v['robots_override']=81
         with self.assertRaises(ValueError):simulate(calculate(v,self.product,False))
 
+@override_settings(PASSWORDLESS_DEMO=False)
 class APITests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -180,9 +183,8 @@ class APITests(TestCase):
 
     def test_registration_and_password_hash(self):
         response=self.post('/api/auth/register/',{'username':'new-user','password':'Rocket-Test-Secure-6742'})
-        self.assertEqual(response.status_code,200,response.content)
-        u=get_user_model().objects.get(username='new-user');self.assertNotEqual(u.password,'Rocket-Test-Secure-6742')
-        self.assertTrue(u.check_password('Rocket-Test-Secure-6742'))
+        self.assertEqual(response.status_code,404)
+        self.assertFalse(get_user_model().objects.filter(username='new-user').exists())
 
     def test_login_lockout(self):
         for _ in range(8):self.post('/api/auth/login/',{'username':'owner','password':'bad'})
@@ -275,7 +277,8 @@ class APITests(TestCase):
 
     def test_anonymous_simulation_claimed_only_by_same_session(self):
         data=self.payload();created=self.post('/api/simulations/',data).json()
-        response=self.post('/api/auth/register/',{'username':'claim-user','password':'Claim-Session-Test-9841'})
+        get_user_model().objects.create_user(username='claim-user',password='Claim-Session-Test-9841')
+        response=self.post('/api/auth/login/',{'username':'claim-user','password':'Claim-Session-Test-9841'})
         self.assertEqual(response.status_code,200,response.content)
         run=SimulationRun.objects.get(id=created['id'])
         self.assertEqual(run.owner.username,'claim-user')

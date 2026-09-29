@@ -8,11 +8,11 @@ NUMBER = re.compile(r"(?<![\w.,])[-+]?\d+(?:[\s\u00a0\u202f]\d{3})*(?:[.,]\d+)?(
 RANGE_SEPARATOR = re.compile(r"(?<=\d)\s*[-–—]\s*(?=[+-]?\d)")
 SIGNS = str.maketrans({'−':'-','﹣':'-','－':'-','＋':'+'})
 UNIT_TOKEN = re.compile(
-    r'(?:мм|см|м|м/[сc](?:2)?|км/ч|кг|т|тонн(?:а|ы)?|'
-    r'час(?:ов|а)?|ч|мин(?:ута|уты|ут)?\.?|месяц(?:ев|а|ы)?|год(?:а|ов)?|лет|'
-    r'а\*?ч|ма\*?ч|квт\*?ч|м2/ч|операц(?:ий|ии)/ч|'
-    r'°[cс]|°|град(?:усов|уса|\.)?|в|вольт(?:а|ов)?|'
-    r'цикл(?:ов|а)?|шт\.?|л|литр(?:а|ов)?|дб(?:\(а\))?)', re.I)
+    r'(?:мм|см|м|м/[сc](?:2)?|км/ч|кг|т|тонн(?:а|ы)?|mm|cm|km/h|m/s(?:2)?|kg|t|tons?|tonnes?|'
+    r'час(?:ов|а)?|ч|мин(?:ута|уты|ут)?\.?|месяц(?:ев|а|ы)?|год(?:а|ов)?|лет|hours?|hrs?|h|minutes?|mins?|months?|years?|yrs?|'
+    r'а\*?ч|ма\*?ч|квт\*?ч|м2/ч|операц(?:ий|ии)/ч|ah|mah|kwh|m2/h|'
+    r'°[cс]|°|град(?:усов|уса|\.)?|в|вольт(?:а|ов)?|volts?|v|'
+    r'цикл(?:ов|а)?|шт\.?|л|литр(?:а|ов)?|дб(?:\(а\))?|pcs?|cycles?|liters?|litres?|db(?:\(a\))?)', re.I)
 COUNT_KEYS = {"drive_wheels","battery_life","emergency_buttons"}
 NONNEGATIVE = {"robot_mass","payload","towing_capacity","battery_capacity","battery_voltage","battery_life","charging_time","runtime","electricity_consumption","operations_per_hour","cleaning_productivity","noise_level","travel_speed","loaded_speed","unloaded_speed","positioning_accuracy","angular_accuracy","emergency_buttons"}
 POSITIVE_UNIT_KEYS = {"length","width","height","turning_diameter","min_aisle_width","obstacle_height","fork_length","fork_width","fork_height","fork_fourth_dimension","load_center","lift_height","load_length","load_width","load_height","cleaning_width","clean_water_tank","dirty_water_tank","dust_tank"}
@@ -35,30 +35,30 @@ def unit_candidates(s: str) -> set[str]:
     found=set()
     # Более длинные единицы проверяем первыми; их фрагменты не читаем второй раз.
     rules=[
-        ("kmh",r"км\s*/\s*ч|км\s*в\s*час"),
-        ("mps2",r"м\s*/\s*с\s*2"),
-        ("mps",r"м\s*/\s*[сc](?!\s*2)"),
-        ("mAh",r"м\s*а\s*\*?\s*ч"),
-        ("Ah",r"(?<![а-яa-z])а\s*\*?\s*ч"),
-        ("kWh",r"квт\s*\*?\s*ч"),
-        ("m2h",r"м\s*2\s*/\s*ч"),
+        ("kmh",r"км\s*/\s*ч|км\s*в\s*час|\bkm\s*/\s*h\b"),
+        ("mps2",r"м\s*/\s*с\s*2|\bm\s*/\s*s\s*2\b"),
+        ("mps",r"м\s*/\s*[сc](?!\s*2)|\bm\s*/\s*s(?!\s*2)"),
+        ("mAh",r"м\s*а\s*\*?\s*ч|\bmah\b"),
+        ("Ah",r"(?<![а-яa-z])а\s*\*?\s*ч|\bah\b"),
+        ("kWh",r"квт\s*\*?\s*ч|\bkwh\b"),
+        ("m2h",r"м\s*2\s*/\s*ч|\bm\s*2\s*/\s*h\b"),
         ("ops_h",r"операц(?:ий|ии)\s*/\s*ч"),
-        ("hours",r"\b(?:час(?:ов|а)?|ч)\b"),
-        ("minutes",r"\b(?:минут(?:а|ы)?|мин)\.?\b"),
-        ("months",r"\bмесяц(?:ев|а|ы)?\b"),
-        ("years",r"\b(?:год(?:а|ов)?|лет)\b"),
-        ("mm",r"\bмм\b"),
-        ("cm",r"\bсм\b"),
-        ("meters",r"(?<![а-яa-z])м(?![а-яa-z])"),
-        ("kg",r"\bкг\b"),
-        ("tonnes",r"\b(?:тонн(?:а|ы)?|т)\b"),
+        ("hours",r"\b(?:час(?:ов|а)?|ч|hours?|hrs?|h)\b"),
+        ("minutes",r"\b(?:минут(?:а|ы)?|мин|minutes?|mins?)\.?\b"),
+        ("months",r"\b(?:месяц(?:ев|а|ы)?|months?)\b"),
+        ("years",r"\b(?:год(?:а|ов)?|лет|years?|yrs?)\b"),
+        ("mm",r"\b(?:мм|mm)\b"),
+        ("cm",r"\b(?:см|cm)\b"),
+        ("meters",r"(?<![а-яa-z])м(?![а-яa-z])|\bmeters?\b|\bmetres?\b|\bm\b"),
+        ("kg",r"\b(?:кг|kg)\b"),
+        ("tonnes",r"\b(?:тонн(?:а|ы)?|т|t|tonnes?|tons?)\b"),
         ("degC",r"°\s*c|градус(?:ов|а)?\s*цельси"),
         ("degrees",r"(?:°|град(?:усов|уса|\.)?)"),
-        ("volts",r"(?<![а-яa-z])в(?![а-яa-z])|\bвольт(?:а|ов)?\b"),
-        ("cycles",r"\bцикл(?:ов|а)?\b"),
-        ("pieces",r"\bшт\.?\b"),
-        ("liters",r"\b(?:л|литр(?:а|ов)?)\b"),
-        ("db",r"\bдб(?:\(а\))?\b"),
+        ("volts",r"(?<![а-яa-z])в(?![а-яa-z])|\bвольт(?:а|ов)?\b|\bvolts?\b|\bv\b"),
+        ("cycles",r"\b(?:цикл(?:ов|а)?|cycles?)\b"),
+        ("pieces",r"\b(?:шт\.?|pcs?)\b"),
+        ("liters",r"\b(?:л|литр(?:а|ов)?|liters?|litres?)\b"),
+        ("db",r"\b(?:дб|db)(?:\([аa]\))?\b"),
     ]
     for unit,pattern in rules:
         if re.search(pattern,s):found.add(unit)
@@ -117,7 +117,7 @@ def choose_unit(label: str, raw: str, target: str, key: str) -> tuple[str,Decima
     for m in NUMBER.finditer(raw.translate(SIGNS)):
         tail=raw.translate(SIGNS)[m.end():]
         suffix=re.match(r"\s*([A-Za-zА-Яа-я°][A-Za-zА-Яа-я0-9°²/*·.]*)(?!\w)",tail)
-        if suffix and suffix.group(1).casefold().replace('ё','е') not in ('до','от','при'):
+        if suffix and suffix.group(1).casefold().replace('ё','е') not in ('до','от','при','to','up','min','max'):
             token=suffix.group(1).casefold().replace('ё','е').replace('·','*').replace('²','2')
             if not UNIT_TOKEN.fullmatch(token) or not unit_candidates(suffix.group(1)):
                 raise NormalizationError("Неизвестная единица измерения: "+suffix.group(1))
@@ -158,9 +158,9 @@ def json_number(d: Decimal):
 def _qualifier(label: str,raw: str) -> str | None:
     text=_word(label+" "+raw)
     if "±" in text:return "plus_minus"
-    if re.search(r"\b(?:не более|до)\b",_word(raw)):return "upper_bound"
-    if re.search(r"\b(?:не менее|от)\b",_word(raw)):return "lower_bound"
-    if "максимальн" in text:return "maximum"
+    if re.search(r"\b(?:не более|до|up to|at most|no more than)\b",_word(raw)):return "upper_bound"
+    if re.search(r"\b(?:не менее|от|at least|from)\b",_word(raw)):return "lower_bound"
+    if "максимальн" in text or re.search(r'\b(?:maximum|max\.)\b',text):return "maximum"
     return None
 
 
@@ -169,8 +169,8 @@ def normalize(field: dict,label: str,raw: str) -> dict:
     if kind=='текст':return {'value':compact(raw),'unit':None,'qualifier':None}
     if kind=='да/нет':
         val=_word(raw)
-        if val in ('да','есть','поддерживается'):return {'value':True,'unit':None,'qualifier':None}
-        if val in ('нет','отсутствует','не поддерживается'):return {'value':False,'unit':None,'qualifier':None}
+        if val in ('да','есть','поддерживается','yes','true','supported'):return {'value':True,'unit':None,'qualifier':None}
+        if val in ('нет','отсутствует','не поддерживается','no','false','unsupported'):return {'value':False,'unit':None,'qualifier':None}
         raise NormalizationError("Неоднозначная опция/условие вместо да или нет")
     if key=='ip_rating':
         if 'по желанию' in _word(raw) or 'опциональн' in _word(raw):raise NormalizationError("Защита указана как опция")

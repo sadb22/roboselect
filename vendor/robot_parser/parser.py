@@ -8,9 +8,10 @@ from collections import defaultdict
 from normalize import normalize, dimensions, NormalizationError, compact, _family
 from rules import match, VERSION as RULE_VERSION
 from prices import parse as parse_price
+from web_pages import product_lines, generic_product_lines
 
 SCHEMA='1.1'
-PARSER='3.1.1-platform'
+PARSER='3.3.0'
 MANUAL={'catalog_status','catalog_class','trl','market_potential','industry','scenario'}
 TYPES={'число','диапазон','текст','да/нет'}
 
@@ -102,16 +103,24 @@ def process_card(content,source,snapshot,fields,version):
             entry['extraction_state']='ambiguous';issue(str(e),key,raw,pos)
         obs.append(entry)
     kind=source['kind']
+    section_label=None
     if kind=='html':
-        if source.get('adapter') not in ('ronavi','moros','robob2b'):
-            issue('Область модели не определена: неизвестный HTML-обработчик',kind='source');return obs,offers,issues,unknown
         parser=SectionParser(source['model_key']);parser.feed(content)
-        if len(parser.sections)!=1:
-            issue('Область модели не определена: нужен один article/section data-model',kind='source');return obs,offers,issues,unknown
-        content=parser.sections[0]
+        if len(parser.sections)==1:
+            content=parser.sections[0]
+            section_label=f'[data-model="{model}"]'
+        else:
+            if source.get('adapter') in ('ronavi','moros','robob2b'):
+                content,section_label=product_lines(content,source)
+            else:
+                content,section_label=generic_product_lines(content,source)
+            if content is None:
+                issue('Область модели не определена: '+section_label,kind='source');return obs,offers,issues,unknown
+            if section_label=='generic:ambiguous-price':
+                issue('Несколько цен в области модели: привязка предложения требует проверки','product_price_raw',kind='review')
     for label,raw,line in txt_entries(content):
-        pos={'type':'line','line':int(line)} if kind=='txt' else {'type':'html_section','selector':f'[data-model="{model}"]','line':int(line)}
-        if re.search(r'^цена(?:\s+(?:аренды|услуги|покупки))?$',label,re.I):
+        pos={'type':'line','line':int(line)} if kind=='txt' else {'type':'html_section','section':section_label,'rendered_line':int(line)}
+        if re.search(r'^(?:цена(?:\s+(?:аренды|услуги|покупки))?|price|rental price)$',label,re.I):
             for ordinal,part in enumerate(raw.split(';')):
                 offer,err=parse_price(label+' '+part,source['source_id'],model,source.get('supplier'),label+' '+raw)
                 if err:issue(err,'product_price_raw',part,pos)
@@ -201,7 +210,7 @@ def run(root,out,sources_path=None):
             runs.setdefault(version,processed_at)
             old['snapshots'][snapshot]={'schema_version':SCHEMA,'snapshot_id':snapshot,'source_id':source['source_id'],
                   'url_or_filename':source.get('source_url') or source['path'],'source_type':source['kind'],
-                  'sha256':sha,'stored_path':str(target.relative_to(out)),'acquired_at':source.get('acquired_at'),
+                  'sha256':sha,'stored_path':target.relative_to(out).as_posix(),'acquired_at':source.get('acquired_at'),
                   'processed_at':runs[version],'parser_version':version,'processing_runs':runs}
             text=raw.decode('utf-8-sig')
             if source['kind']=='csv':
@@ -260,9 +269,9 @@ def run(root,out,sources_path=None):
                 meaning={k:v for k,v in x['normalized'].items() if k!='source_unit'}
                 candidates[(x.get('conditions'),json.dumps(meaning,ensure_ascii=False,sort_keys=True))].append(x)
             field_candidates[key]=[{'value':json.loads(serialized),'conditions':condition,
-                                    'observation_ids':[x['observation_id'] for x in items],
+                                    'observation_ids':sorted(x['observation_id'] for x in items),
                                     'source_ids':sorted({x['source_id'] for x in items})}
-                                   for (condition,serialized),items in candidates.items()]
+                                   for (condition,serialized),items in sorted(candidates.items(),key=lambda pair:(str(pair[0][0]),pair[0][1]))]
             by_condition=defaultdict(set)
             for (condition,serialized) in candidates:by_condition[condition].add(serialized)
             conflicts={condition for condition,meanings in by_condition.items() if len(meanings)>1}

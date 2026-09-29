@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views as v
-urlpatterns=[path('',v.home,name='home'),path('account/',v.account,name='account'),
+from . import review_views as r
+urlpatterns=[path('enter/<str:role>/',v.enter_role,name='enter_role'),path('workspace/robots/<int:id>/card/',r.create_card,name='review_create_card'),path('workspace/issues/<int:id>/resolve/',r.resolve_issue,name='review_issue_resolve'),path('workspace/robots/',r.catalogue,name='review_catalog'),path('workspace/robots/<int:id>/',r.robot,name='review_robot'),path('workspace/observations/<int:id>/',r.review,name='review_observation'),path('workspace/snapshots/<int:id>/',r.snapshot,name='review_snapshot'),path('workspace/sources/',r.sources,name='review_sources'),path('',v.home,name='home'),path('user/',v.user_home,name='user_home'),path('account/',v.account,name='account'),
  path('studies/',v.studies,name='studies'),path('studies/new/',v.study_edit,name='study_new'),path('studies/template/',v.study_template,name='study_template'),path('studies/upload/',v.study_upload,name='study_upload'),
  path('studies/<uuid:id>/copy/',v.study_copy,name='study_copy'),path('studies/<uuid:id>/delete/',v.study_delete,name='study_delete'),
  path('studies/<uuid:id>/',v.study_detail,name='study'),path('studies/<uuid:id>/edit/',v.study_edit,name='study_edit'),

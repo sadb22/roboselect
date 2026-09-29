@@ -71,7 +71,7 @@ def bootstrap(request):
     for f in fields:
         if f['key'] in norms:f.update(default=norms[f['key']].value,source=norms[f['key']].source)
     return JsonResponse(dict(user=dict(username=request.user.username,admin=request.user.is_staff) if request.user.is_authenticated else None,
-        fields=fields,defaults=defaults(),objects=datasets,model_version=MODEL_VERSION,data_version=DATA_VERSION,
+        passwordless_demo=getattr(request,"passwordless_demo",False),fields=fields,defaults=defaults(),objects=datasets,model_version=MODEL_VERSION,data_version=DATA_VERSION,
         formulas=FORMULAS,product_count=Product.objects.count()))
 
 @api()
@@ -90,6 +90,7 @@ def calculate_view(request):return JsonResponse(get_calculation(body(request),re
 
 @api(('POST',))
 def auth_view(request,action):
+    if action not in ('login','logout'):return JsonResponse({'error':'Регистрация временно недоступна'},status=404)
     if action=='logout':logout(request);return JsonResponse({'ok':True})
     previous_session=request.session.session_key
     data=body(request);username=str(data.get('username','')).strip();password=data.get('password','')
@@ -99,21 +100,14 @@ def auth_view(request,action):
     attempt,_=LoginAttempt.objects.get_or_create(key=key)
     if attempt.failures>=8 and timezone.now()-attempt.updated_at<timedelta(minutes=15):
         return JsonResponse({'error':'Слишком много попыток. Повторите через 15 минут.'},status=429)
-    if action=='register':
-        u=get_user_model()(username=username)
-        try:u.full_clean(exclude=['password']);validate_password(password,u)
-        except ValidationError as e:
-            attempt.failures+=1;attempt.save();raise e
-        u.set_password(password)
-        try:u.save()
-        except IntegrityError:raise ValueError('Это имя пользователя уже занято')
-        login(request,u)
-    elif action=='login':
+    if action=='login':
         u=authenticate(request,username=username,password=password)
         if not u:
             if timezone.now()-attempt.updated_at>=timedelta(minutes=15):attempt.failures=0
             attempt.failures+=1;attempt.save()
             return JsonResponse({'error':'Неверное имя пользователя или пароль'},status=400)
+        if data.get('role')=='admin' and not u.is_staff:
+            return JsonResponse({'error':'У аккаунта нет прав администратора'},status=403)
         login(request,u)
     else:raise ValueError('Неизвестное действие')
     if previous_session:

@@ -45,6 +45,19 @@ def stale(config):
     return any(not Equipment.objects.filter(pk=x['equipment'],published_id=x['revision']).exists() for x in config.snapshot.values())
 
 def home(request):
+    return render(request,'workflow/entry.html')
+
+@require_POST
+def enter_role(request,role):
+    from django.conf import settings
+    if role not in ('admin','user'):return HttpResponseForbidden()
+    if not settings.PASSWORDLESS_DEMO:
+        return redirect('/account/?role='+('admin' if role=='admin' else 'client'))
+    request.session['demo_role']=role
+    request.session.cycle_key()
+    return redirect('review_catalog' if role=='admin' else 'user_home')
+
+def user_home(request):
     rows=[]
     for ident,r in catalog_snapshot().items():
         missing=[label for k,(label,_,_) in TECH.items() if r['data'].get(k) is None]
@@ -68,6 +81,11 @@ def study_edit(request,id=None):
         try:
             req=json.loads(request.POST['requirements']);name=request.POST.get('project_name','').strip()
             if not name or len(name)>160:raise ValueError('Название: от 1 до 160 символов')
+            if request.POST.get('action')=='load_template':
+                loaded_req,loaded_fin=parse_study_file(request.FILES.get('file'))
+                req=loaded_req;form=FinanceForm(initial=loaded_fin)
+                messages.success(request,'Данные из шаблона загружены в форму. Проверьте их и нажмите «Сохранить требования».')
+                return page(request,'study_edit',study=study,name=name,requirements=req,finance_form=form,operations=OPERATIONS,error='')
             if not form.is_valid():raise ValueError('Проверьте выделенные финансовые поля')
             req,fin=requirements(req,form.cleaned_data)
             with transaction.atomic():
@@ -116,21 +134,31 @@ def study_template(request):
 
 @action
 def study_upload(request):
-    file=request.FILES.get('file')
+    req,fin=parse_study_file(request.FILES.get('file'))
+    with transaction.atomic():
+        study=Study.objects.create(owner=request.user,name='Склад из файла')
+        StudyVersion.objects.create(study=study,number=1,requirements=req,finance=fin)
+    return redirect('study',id=study.pk)
+
+def parse_study_file(file):
     if not file or file.size>2_000_000:raise ValueError('Выберите CSV до 2 МБ по шаблону проекта')
-    try:rows=list(csv.DictReader(io.StringIO(file.read().decode('utf-8-sig')),delimiter=';'))
+    if not file.name.lower().endswith('.csv'):raise ValueError('Используйте CSV-шаблон склада, доступный по кнопке «Скачать шаблон»')
+    try:
+        reader=csv.DictReader(io.StringIO(file.read().decode('utf-8-sig')),delimiter=';')
+        if reader.fieldnames!=['section','key','value']:raise ValueError('Нужен CSV-шаблон склада с колонками section;key;value')
+        rows=list(reader)
     except UnicodeDecodeError:raise ValueError('CSV должен быть в кодировке UTF-8')
     if not rows or len(rows)>100:raise ValueError('Допускается от 1 до 100 строк')
     data={'requirements':{},'finance':{}};seen=set()
     for row in rows:
         section=row.get('section');key=row.get('key');value=row.get('value')
-        if section not in data or not key or (section,key) in seen:raise ValueError('Некорректная или повторная строка шаблона')
-        seen.add((section,key));data[section][key]=json.loads(value)
-    req,fin=requirements(data['requirements'],data['finance'])
-    with transaction.atomic():
-        study=Study.objects.create(owner=request.user,name='Склад из файла')
-        StudyVersion.objects.create(study=study,number=1,requirements=req,finance=fin)
-    return redirect('study',id=study.pk)
+        allowed={'requirements':default_requirements(),'finance':defaults()}
+        if section not in data or key not in allowed[section] or (section,key) in seen or None in row:raise ValueError('Некорректная, неизвестная или повторная строка шаблона')
+        try:data[section][key]=json.loads(value)
+        except (ValueError,TypeError):raise ValueError(f'Некорректное значение в строке {section} / {key}. Сверьте с исходным шаблоном.')
+        seen.add((section,key))
+    try:return requirements(data['requirements'],data['finance'])
+    except (AttributeError,KeyError,TypeError):raise ValueError('Неверная структура параметров, операций или проездов. Сверьте файл с шаблоном.')
 
 @action
 def generate(request,id):
@@ -205,12 +233,14 @@ def need(request,id):
 
 @login_required(login_url='/account/')
 def workspace(request):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     revisions=EquipmentRevision.objects.select_related('equipment__supplier','author').order_by('-created_at')
     if not request.user.is_staff:revisions=revisions.filter(equipment__supplier__members=request.user)
     return page(request,'workspace',revisions=revisions[:200],suppliers=Supplier.objects.all() if request.user.is_staff else request.user.suppliers.all(),batches=ImportBatch.objects.filter(owner=request.user).order_by('-created_at')[:10],needs=CatalogNeed.objects.all() if request.user.is_staff else [])
 
 @login_required(login_url='/account/')
 def equipment_edit(request,id=None):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     old=get_object_or_404(EquipmentRevision,id=id) if id else None
     suppliers=Supplier.objects.all() if request.user.is_staff else request.user.suppliers.all()
     if old and not suppliers.filter(pk=old.equipment.supplier_id).exists():return HttpResponseForbidden()
@@ -227,6 +257,7 @@ def equipment_edit(request,id=None):
 
 @login_required(login_url='/account/')
 def revision_detail(request,id):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     r=get_object_or_404(EquipmentRevision,id=id)
     if not request.user.is_staff and not r.equipment.supplier.members.filter(pk=request.user.pk).exists():return HttpResponseForbidden()
     return page(request,'revision',revision=r,evidence=json.dumps(r.evidence,ensure_ascii=False,indent=2),data=json.dumps(r.data,ensure_ascii=False,indent=2))
@@ -239,11 +270,13 @@ def moderate(request,id):
 
 @login_required(login_url='/account/')
 def template(request):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     stream=io.StringIO();writer=csv.writer(stream,delimiter=';');writer.writerow(TEMPLATE)
     response=HttpResponse('\ufeff'+stream.getvalue(),content_type='text/csv; charset=utf-8');response['Content-Disposition']='attachment; filename="equipment-template.csv"';return response
 
 @action
 def upload(request):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     suppliers=Supplier.objects.all() if request.user.is_staff else request.user.suppliers.all()
     supplier=get_object_or_404(suppliers,pk=request.POST.get('supplier'));file=request.FILES.get('file')
     if not file:raise ValueError('Выберите файл')
@@ -262,6 +295,7 @@ def upload_parser(request):
 
 @login_required(login_url='/account/')
 def batch_detail(request,id):
+    if not request.user.is_staff:return HttpResponseForbidden('Управление ассортиментом доступно только администратору')
     batch=get_object_or_404(ImportBatch,id=id)
     if not request.user.is_staff and batch.owner_id!=request.user.pk:return HttpResponseForbidden()
     return page(request,'batch',batch=batch)

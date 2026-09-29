@@ -1,4 +1,6 @@
 import uuid
+from .provenance_models import (Robot, WarehouseSpec, CleaningSpec, Scenario, RobotScenario,
+    Source, SourceSnapshot, FieldObservation, FieldSelection, RobotOffer, ReviewIssue)
 from django.conf import settings
 from django.db import models
 

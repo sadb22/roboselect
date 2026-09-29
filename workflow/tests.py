@@ -1,3 +1,4 @@
+from django.test import override_settings
 import csv
 import io
 from copy import deepcopy
@@ -13,6 +14,7 @@ from .views import catalog_snapshot
 from .selection import evaluate,suggest
 from .catalog import submit,publish,import_csv,TEMPLATE
 
+@override_settings(PASSWORDLESS_DEMO=False)
 class WorkflowTests(TestCase):
     @classmethod
     def setUpTestData(cls):

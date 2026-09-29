@@ -1,0 +1,8 @@
+<section class="panel">
+<h2>Заполнить данные склада из файла</h2>
+<p>Скачайте CSV-шаблон, заполните параметры склада, проезды, операции и экономику, затем загрузите его сюда. Данные появятся в форме для проверки; проект сохранится после нажатия «Сохранить требования».</p>
+<a class="button secondary" href="{% url 'study_template' %}">Скачать шаблон склада</a>
+<label for="warehouse-template">Заполненный шаблон CSV (UTF-8, до 2 МБ)</label>
+<input id="warehouse-template" type="file" name="file" accept=".csv,text/csv">
+<div class="actions"><button type="submit" name="action" value="load_template" formnovalidate>Загрузить данные в форму</button></div>
+</section>

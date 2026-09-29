@@ -189,7 +189,6 @@
               "type": "string",
               "enum": [
                 "login",
-                "register",
                 "logout"
               ]
             }

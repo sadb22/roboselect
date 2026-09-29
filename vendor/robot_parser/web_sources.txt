@@ -1,0 +1,3 @@
+# Добавьте ссылки на страницы роботов, по одной на строку.
+# Затем: python3 add_source.py --file web_sources.txt
+# Пример: https://ronavi-robotics.ru/catalogue/h2000

@@ -3,6 +3,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get('DEBUG', '1') == '1'
+PASSWORDLESS_DEMO = os.environ.get('PASSWORDLESS_DEMO', '1' if DEBUG else '0') == '1'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'local-development-only-do-not-use-on-server')
 if not DEBUG and SECRET_KEY == 'local-development-only-do-not-use-on-server':
     raise RuntimeError('Set SECRET_KEY for production')
@@ -17,6 +18,7 @@ INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth', 'django.contrib
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'whitenoise.middleware.WhiteNoiseMiddleware',
               'django.contrib.sessions.middleware.SessionMiddleware', 'django.middleware.common.CommonMiddleware',
               'django.middleware.csrf.CsrfViewMiddleware', 'django.contrib.auth.middleware.AuthenticationMiddleware',
+              'core.demo_access.PasswordlessDemoMiddleware',
               'django.contrib.messages.middleware.MessageMiddleware', 'django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF = 'config.urls'
 TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [BASE_DIR / 'templates'],

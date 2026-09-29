@@ -9,6 +9,8 @@ services:
     dockerCommand: python scripts/render_start.py
     healthCheckPath: /health/
     envVars:
+      - key: PASSWORDLESS_DEMO
+        value: "1"
       - key: DEBUG
         value: "0"
       - key: SECRET_KEY

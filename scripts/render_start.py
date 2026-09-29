@@ -9,6 +9,9 @@ from pathlib import Path
 
 def main():
     os.chdir(Path(__file__).resolve().parent.parent)
+    # This Render deployment is the public passwordless demonstration.
+    # An explicit environment value of 0 restores authenticated access.
+    os.environ.setdefault('PASSWORDLESS_DEMO', '1')
     if not os.environ.get('DATABASE_URL'):
         raise SystemExit('DATABASE_URL is required: local storage is ephemeral on Render')
     port = int(os.environ.get('PORT', '10000'))
